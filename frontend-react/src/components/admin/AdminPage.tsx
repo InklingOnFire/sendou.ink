@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import PageHeader from "../common/PageHeader"
 import { RouteComponentProps, Redirect } from "@reach/router"
-import { useQuery, useMutation } from "@apollo/react-hooks"
+import { useQuery, useMutation } from "@apollo/client"
 import { UserData } from "../../types"
 import { USER } from "../../graphql/queries/user"
 import Loading from "../common/Loading"

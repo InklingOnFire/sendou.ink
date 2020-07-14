@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { RouteComponentProps, Redirect, Link } from "@reach/router"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 import {
   SEARCH_FOR_TOURNAMENT_BY_ID,
   SearchForTournamentByIdData,

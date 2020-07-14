@@ -1,5 +1,5 @@
 import React from "react"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 import { USERS, UsersData } from "../../graphql/queries/users"
 import Error from "./Error"
 import Select from "../elements/Select"

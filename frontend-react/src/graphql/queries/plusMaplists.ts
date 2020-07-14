@@ -1,4 +1,4 @@
-import { gql, DocumentNode } from "apollo-boost"
+import { gql, DocumentNode } from "@apollo/client"
 import { Stage } from "../../types"
 
 export interface PlusMaplistsData {

@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 import { LINKS } from "../../graphql/queries/links"
 import Loading from "../common/Loading"
 import Error from "../common/Error"

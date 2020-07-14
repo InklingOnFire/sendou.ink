@@ -1,4 +1,4 @@
-import { gql, DocumentNode } from "apollo-boost"
+import { gql, DocumentNode } from "@apollo/client"
 
 export const FREE_AGENT_POSTS: DocumentNode = gql`
   {

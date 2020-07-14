@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 import Loading from "../common/Loading"
 import Error from "../common/Error"
 import { RouteComponentProps } from "@reach/router"
@@ -75,7 +75,7 @@ const MaplistCard: React.FC<MaplistCardProps> = ({
           />
         </Heading>
         <Flex flexDirection="column" justifyContent="center" flexWrap="wrap">
-          {votedMaps.map(stage => {
+          {votedMaps.map((stage) => {
             return (
               <Flex key={stage.name} my="0.5em">
                 <Avatar

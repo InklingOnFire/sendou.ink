@@ -1,4 +1,4 @@
-import { gql, DocumentNode } from "apollo-boost"
+import { gql, DocumentNode } from "@apollo/client"
 
 export const ADD_LIKE: DocumentNode = gql`
   mutation addLike($discord_id: String!) {

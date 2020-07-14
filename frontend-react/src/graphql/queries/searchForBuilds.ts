@@ -1,4 +1,4 @@
-import { gql, DocumentNode } from "apollo-boost"
+import { gql, DocumentNode } from "@apollo/client"
 
 export const SEARCH_FOR_BUILDS: DocumentNode = gql`
   query searchForBuilds($discord_id: String, $weapon: String) {

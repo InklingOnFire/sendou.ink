@@ -3,7 +3,7 @@ import Modal from "../elements/Modal"
 import UserSelector from "../common/UserSelector"
 import { ADD_SUGGESTION } from "../../graphql/mutations/addSuggestion"
 import { ADD_VOUCH } from "../../graphql/mutations/addVouch"
-import { useMutation } from "@apollo/react-hooks"
+import { useMutation } from "@apollo/client"
 import {
   useToast,
   FormControl,
@@ -60,7 +60,7 @@ const SuggestionVouchModal: React.FC<SuggestionVouchModalProps> = ({
     ADD_SUGGESTION,
     {
       variables: { ...(form as AddSuggestionVars) },
-      onCompleted: data => {
+      onCompleted: (data) => {
         closeModal()
         toast({
           description: `Suggestion added`,
@@ -69,7 +69,7 @@ const SuggestionVouchModal: React.FC<SuggestionVouchModalProps> = ({
           duration: 10000,
         })
       },
-      onError: error => {
+      onError: (error) => {
         toast({
           title: "An error occurred",
           description: error.message,
@@ -87,7 +87,7 @@ const SuggestionVouchModal: React.FC<SuggestionVouchModalProps> = ({
     AddVouchVars
   >(ADD_VOUCH, {
     variables: { ...(form as AddVouchVars) },
-    onCompleted: data => {
+    onCompleted: (data) => {
       closeModal()
       toast({
         description: `Player vouched`,
@@ -96,7 +96,7 @@ const SuggestionVouchModal: React.FC<SuggestionVouchModalProps> = ({
         duration: 10000,
       })
     },
-    onError: error => {
+    onError: (error) => {
       toast({
         title: "An error occurred",
         description: error.message,
@@ -136,7 +136,7 @@ const SuggestionVouchModal: React.FC<SuggestionVouchModalProps> = ({
         <FormLabel htmlFor="user">Discord username</FormLabel>
         <UserSelector
           id="user"
-          setValue={value => handleChange({ discord_id: value })}
+          setValue={(value) => handleChange({ discord_id: value })}
         />
         <FormErrorMessage>Required field</FormErrorMessage>
         <FormHelperText>

@@ -9,7 +9,7 @@ import {
   ArrayParam,
   encodeQueryParams,
 } from "use-query-params"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 import { SEARCH_FOR_TOURNAMENTS } from "../../graphql/queries/searchForTournaments"
 import Loading from "../common/Loading"
 import Error from "../common/Error"

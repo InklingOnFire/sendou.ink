@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import DatePicker from "../elements/DatePicker"
 import Loading from "../common/Loading"
 import Error from "../common/Error"
-import { useQuery, useMutation } from "@apollo/react-hooks"
+import { useQuery, useMutation } from "@apollo/client"
 import { PLUS_INFO, PlusInfoData } from "../../graphql/queries/plusInfo"
 import {
   START_VOTING,

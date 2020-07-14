@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react"
 import { RouteComponentProps } from "@reach/router"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 import { XTrendsData, X_TRENDS } from "../../graphql/queries/xTrends"
 import Loading from "../common/Loading"
 import Error from "../common/Error"

@@ -1,4 +1,4 @@
-import { gql, DocumentNode } from "apollo-boost"
+import { gql, DocumentNode } from "@apollo/client"
 
 export const SEARCH_FOR_TEAM: DocumentNode = gql`
   query searchForTeam($name: String!) {

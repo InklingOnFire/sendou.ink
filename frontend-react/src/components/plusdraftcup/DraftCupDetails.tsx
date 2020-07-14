@@ -5,7 +5,7 @@ import {
   SearchForDraftCupData,
   SearchForDraftCupVars,
 } from "../../graphql/queries/searchForDraftCup"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 import Loading from "../common/Loading"
 import Error from "../common/Error"
 import { DraftTournamentCard } from "./DraftTournamentCards"

@@ -38,7 +38,7 @@ import {
 import { RiTShirt2Line, RiTShirtAirLine } from "react-icons/ri"
 import Logo from "./Logo"
 import NavItem from "./NavItem"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 import { USER } from "../../graphql/queries/user"
 import UserAvatar from "../common/UserAvatar"
 import DividingBox from "../common/DividingBox"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { SUMMARIES } from "../../graphql/queries/summaries"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 import Loading from "../common/Loading"
 import { USER } from "../../graphql/queries/user"
 import Error from "../common/Error"

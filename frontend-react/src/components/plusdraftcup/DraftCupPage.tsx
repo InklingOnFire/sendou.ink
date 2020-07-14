@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import { RouteComponentProps } from "@reach/router"
 import PageHeader from "../common/PageHeader"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 import {
   PlusDraftCupsData,
   PLUS_DRAFT_CUPS,

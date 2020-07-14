@@ -1,5 +1,5 @@
 import React from "react"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 
 import Suggestions from "./Suggestions"
 import Loading from "../common/Loading"

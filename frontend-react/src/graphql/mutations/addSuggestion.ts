@@ -1,4 +1,4 @@
-import { gql, DocumentNode } from "apollo-boost"
+import { gql, DocumentNode } from "@apollo/client"
 
 export const ADD_SUGGESTION: DocumentNode = gql`
   mutation addSuggestion(

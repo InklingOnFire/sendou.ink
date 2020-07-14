@@ -7,20 +7,27 @@ import {
   CSSReset,
   theme,
 } from "@chakra-ui/core"
-import { ApolloProvider } from "@apollo/react-hooks"
+import {
+  ApolloProvider,
+  ApolloClient,
+  InMemoryCache,
+  HttpLink,
+} from "@apollo/client"
 import { QueryParamProvider } from "use-query-params"
 import { HelmetProvider } from "react-helmet-async"
 import { LocationProvider, createHistory } from "@reach/router"
-import ApolloClient from "apollo-boost"
 import * as serviceWorker from "./serviceWorker"
 import customIcons from "./assets/icons"
 import "./i18n"
 
 const client = new ApolloClient({
-  uri:
-    process.env.NODE_ENV === "production"
-      ? "/graphql"
-      : "http://localhost:3001/graphql",
+  cache: new InMemoryCache(),
+  link: new HttpLink({
+    uri:
+      process.env.NODE_ENV === "production"
+        ? "/graphql"
+        : "http://localhost:3001/graphql",
+  }),
 })
 
 const customTheme = { ...theme, icons: { ...theme.icons, ...customIcons } }

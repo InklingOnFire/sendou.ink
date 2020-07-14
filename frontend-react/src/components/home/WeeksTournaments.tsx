@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import Loading from "../common/Loading"
 import Error from "../common/Error"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 import {
   UpcomingEventsData,
   UPCOMING_EVENTS,

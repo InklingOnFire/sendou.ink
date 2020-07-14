@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { RouteComponentProps, Link, Redirect } from "@reach/router"
-import { useQuery, useMutation } from "@apollo/react-hooks"
+import { useQuery, useMutation } from "@apollo/client"
 import { MAP_VOTES, MapVotesData } from "../../graphql/queries/mapVotes"
 import Error from "../common/Error"
 import Loading from "../common/Loading"
@@ -40,7 +40,7 @@ const MapVoting: React.FC<RouteComponentProps> = () => {
     AddMapVotesVars
   >(ADD_MAP_VOTES, {
     variables: { votes },
-    onCompleted: data => {
+    onCompleted: (data) => {
       window.scrollTo(0, 0)
       toast({
         description: `Map votes submitted`,
@@ -49,7 +49,7 @@ const MapVoting: React.FC<RouteComponentProps> = () => {
         duration: 10000,
       })
     },
-    onError: error => {
+    onError: (error) => {
       toast({
         title: "An error occurred",
         description: error.message,
@@ -68,7 +68,7 @@ const MapVoting: React.FC<RouteComponentProps> = () => {
 
     // this is to remove the __typename property
     setVotes(
-      data.mapVotes.map(vote => ({
+      data.mapVotes.map((vote) => ({
         name: vote.name,
         sz: vote.sz,
         tc: vote.tc,
