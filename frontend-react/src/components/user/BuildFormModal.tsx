@@ -275,7 +275,7 @@ const BuildFormModal: React.FC<BuildFormModalProps> = ({
         showAlts
       />
       {build.weapon && (
-        <WeaponImage englishName={build.weapon as Weapon} size="BIG" />
+        <WeaponImage englishName={build.weapon as Weapon} weaponSize="BIG" />
       )}
       <Flex mt="1em" justifyContent="space-between" flexWrap="wrap">
         <Flex flexDirection="column" alignItems="center">

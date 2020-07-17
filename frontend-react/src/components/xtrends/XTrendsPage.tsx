@@ -220,7 +220,7 @@ const XTrendsPage: React.FC<RouteComponentProps> = () => {
                     <Box m="0.5em" cursor="pointer">
                       <WeaponImage
                         englishName={weapon.name}
-                        size="MEDIUM"
+                        weaponSize="MEDIUM"
                         noTitle
                       />
                     </Box>

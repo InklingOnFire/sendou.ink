@@ -178,7 +178,7 @@ const Top500BrowserPage: React.FC<RouteComponentProps> = () => {
                         >
                           <WpnImage
                             englishName={placement.weapon as Weapon}
-                            size="SMALL"
+                            weaponSize="SMALL"
                           />
                         </Box>
                       </Flex>

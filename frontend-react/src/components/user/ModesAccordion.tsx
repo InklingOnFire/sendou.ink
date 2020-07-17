@@ -228,7 +228,7 @@ const ModesAccordion: React.FC<ModesAccordionProps> = ({ placements }) => {
                         </Box>
                         <WeaponImage
                           englishName={placement.weapon}
-                          size="SMALL"
+                          weaponSize="SMALL"
                         />
                         <Box>{placement.rank}</Box>
                         <Box>{placement.x_power}</Box>

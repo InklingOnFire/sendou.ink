@@ -38,7 +38,7 @@ const WeaponSelector: React.FC<WeaponSelectorProps> = ({
     <components.Option {...props}>
       <Flex alignItems="center" color={props.isFocused ? "black" : undefined}>
         <Box mr="0.5em">
-          <WeaponImage size="SMALL" englishName={props.value} />
+          <WeaponImage weaponSize="SMALL" englishName={props.value} />
         </Box>
         {props.label}
       </Flex>

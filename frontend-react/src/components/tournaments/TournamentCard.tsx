@@ -84,7 +84,7 @@ const TournamentCard: React.FC<TournamentCardProps> = ({
         <Flex flexWrap="wrap">
           {tournament.popular_weapons.map((weapon) => (
             <Box key={weapon} mx="0.2em">
-              <WeaponImage englishName={weapon as Weapon} size="SMALL" />
+              <WeaponImage englishName={weapon as Weapon} weaponSize="SMALL" />
             </Box>
           ))}
         </Flex>

@@ -38,8 +38,11 @@ const iconNavItems = [
 const IconNav: React.FC = () => {
   return (
     <Flex
+      flexShrink={0}
       h="100vh"
       w={16}
+      top={0}
+      position="sticky"
       alignItems="center"
       justifyContent="center"
       flexDir="column"
@@ -54,7 +57,7 @@ const IconNav: React.FC = () => {
             transition="0.3s transform"
             _hover={{ transform: "scale(1.15)" }}
           >
-            <Image key={route} src={icon} />
+            <Image ignoreFallback key={route} src={icon} />
           </PseudoBox>
         </Link>
       ))}

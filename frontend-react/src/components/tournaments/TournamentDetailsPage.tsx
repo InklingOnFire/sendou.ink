@@ -239,7 +239,7 @@ const TournamentDetailsPage: React.FC<
                       <Box gridArea="2 / 2 / 3 / 3" mb="0.4em">
                         <WeaponImage
                           englishName={round.winning_team_weapons[index]}
-                          size="SMALL"
+                          weaponSize="SMALL"
                         />
                       </Box>{" "}
                       {round.winning_team_main_abilities[index].map(abilityMap)}
@@ -281,7 +281,7 @@ const TournamentDetailsPage: React.FC<
                         <Box gridArea="2 / 2 / 3 / 3" mb="0.4em">
                           <WeaponImage
                             englishName={round.losing_team_weapons[index]}
-                            size="SMALL"
+                            weaponSize="SMALL"
                           />
                         </Box>{" "}
                         {round.losing_team_main_abilities[index].map(

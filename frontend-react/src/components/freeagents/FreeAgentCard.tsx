@@ -133,7 +133,7 @@ const FreeAgentCard: React.FC<FreeAgentCardProps> = ({
           {discord_user?.weapons &&
             discord_user.weapons.map((wpn) => (
               <Box mx="0.3em" key={wpn}>
-                <WeaponImage englishName={wpn} size="SMALL" />
+                <WeaponImage englishName={wpn} weaponSize="SMALL" />
               </Box>
             ))}
         </Flex>

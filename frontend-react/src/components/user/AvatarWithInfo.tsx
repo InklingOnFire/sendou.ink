@@ -122,7 +122,7 @@ const AvatarWithInfo: React.FC<AvatarWithInfoProps> = ({ user, canEdit }) => {
                 <Flex mt="0.2rem" w="100%">
                   {user.weapons.map((wpn) => (
                     <Box mx="0.2em" key={wpn}>
-                      <WeaponImage englishName={wpn} size="SMALL" />
+                      <WeaponImage englishName={wpn} weaponSize="SMALL" />
                     </Box>
                   ))}
                 </Flex>

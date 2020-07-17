@@ -28,7 +28,11 @@ const Emoji: React.FC<EmojiProps> = (props) => {
   const weaponName = weaponCodes[value]
   if (!!weaponName)
     return (
-      <WeaponImage englishName={weaponName as any} size="SMALL" asInlineBlock />
+      <WeaponImage
+        englishName={weaponName as any}
+        weaponSize="SMALL"
+        asInlineBlock
+      />
     )
 
   const abilityName = abilityCodes[value]

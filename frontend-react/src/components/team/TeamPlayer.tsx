@@ -68,7 +68,7 @@ const TeamPlayer: React.FC<TeamPlayerProps> = ({
             <Flex mt="0.2rem">
               {weapons.map((wpn) => (
                 <Box m="0.4em" key={wpn}>
-                  <WeaponImage englishName={wpn} size="SMEDIUM" />
+                  <WeaponImage englishName={wpn} weaponSize="SMEDIUM" />
                 </Box>
               ))}
             </Flex>
@@ -89,7 +89,7 @@ const TeamPlayer: React.FC<TeamPlayerProps> = ({
         <Flex mt="0.2rem" justifyContent="space-between">
           {weapons.map((wpn) => (
             <Box m="0.4em" key={wpn}>
-              <WeaponImage englishName={wpn} size="SMALL" />
+              <WeaponImage englishName={wpn} weaponSize="SMALL" />
             </Box>
           ))}
         </Flex>

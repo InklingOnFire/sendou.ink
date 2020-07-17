@@ -63,14 +63,18 @@ const MarkdownHelpPage: React.FC<RouteComponentProps> = () => {
           <Flex flexDir="column">
             <Box>
               :luna_blaster: -{">"}{" "}
-              <WeaponImage size="SMALL" englishName="Luna Blaster" />
+              <WeaponImage weaponSize="SMALL" englishName="Luna Blaster" />
             </Box>
             <Box>
-              :96_gal: -{">"} <WeaponImage size="SMALL" englishName=".96 Gal" />
+              :96_gal: -{">"}{" "}
+              <WeaponImage weaponSize="SMALL" englishName=".96 Gal" />
             </Box>
             <Box>
               :custom_e-liter_4k_scope: -{">"}{" "}
-              <WeaponImage size="SMALL" englishName="Custom E-liter 4K Scope" />
+              <WeaponImage
+                weaponSize="SMALL"
+                englishName="Custom E-liter 4K Scope"
+              />
             </Box>
             <Box w="250px" my="0.5em">
               <Button onClick={() => setShowWeapons(!showWeapons)}>

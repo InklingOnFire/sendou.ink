@@ -4,6 +4,7 @@ import MyThemeContext from "../../themeContext"
 import { Router, RouteComponentProps } from "@reach/router"
 import Loading from "../common/Loading"
 import BuildsPageNav from "../builds/BuildsPageNav"
+import "./Nav.css"
 
 interface NavWithContentProps {
   title: string
@@ -35,7 +36,18 @@ const NavWithContent: React.FC<RouteComponentProps & NavWithContentProps> = ({
 const SecondaryNav: React.FC = () => {
   const { bgColor, themeColorWithShade } = useContext(MyThemeContext)
   return (
-    <Box as="nav" h="100vh" w="200px" bg={bgColor} p="0.5rem">
+    <Box
+      flexShrink={0}
+      className="hide-scroll"
+      top={0}
+      position="sticky"
+      as="nav"
+      h="100vh"
+      w="200px"
+      overflowY="scroll"
+      bg={bgColor}
+      p="0.5rem"
+    >
       <Suspense fallback={<Loading />}>
         <Router>
           <NavWithContent

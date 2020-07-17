@@ -52,7 +52,7 @@ const DraggableWeaponSelector: React.FC<DraggableWeaponSelector> = ({
           <Flex flexWrap="wrap">
             {weapons.map((wpn) => (
               <Box as="span" key={wpn} onClick={() => addWeaponImage(wpn)}>
-                <WeaponImage size="SMALL" englishName={wpn} />
+                <WeaponImage weaponSize="SMALL" englishName={wpn} />
               </Box>
             ))}
           </Flex>

@@ -4,10 +4,11 @@ import english_internal from "../../utils/english_internal.json"
 import { weapons } from "../../assets/imageImports"
 import { Weapon } from "../../types.js"
 import { useTranslation } from "react-i18next"
+import { Image, ImageProps } from "@chakra-ui/core"
 
 interface WeaponImageProps {
   englishName: Weapon
-  size: "SMALL" | "SMEDIUM" | "MEDIUM" | "BIG"
+  weaponSize: "SMALL" | "SMEDIUM" | "MEDIUM" | "BIG"
   asInlineBlock?: boolean
   noTitle?: boolean
 }
@@ -22,25 +23,26 @@ const sizeWhMap: Record<
   BIG: undefined,
 }
 
-const WeaponImage: React.FC<WeaponImageProps> = ({
+const WeaponImage: React.FC<WeaponImageProps & ImageProps> = ({
   englishName,
-  size,
+  weaponSize,
   asInlineBlock,
   noTitle,
+  ...props
 }) => {
   const { t } = useTranslation()
   const dictToUse: any = weapons
-  const wh = sizeWhMap[size]
+  const wh = sizeWhMap[weaponSize]
   return (
-    <img
+    <Image
       src={dictToUse[english_internal[englishName]]}
+      ignoreFallback
       alt={t(`game;${englishName}`)}
       title={noTitle ? undefined : t(`game;${englishName}`)}
-      style={{
-        width: wh,
-        height: wh,
-        display: asInlineBlock ? "inline-block" : undefined,
-      }}
+      w={wh}
+      h={wh}
+      display={asInlineBlock ? "inline-block" : undefined}
+      {...props}
     />
   )
 }

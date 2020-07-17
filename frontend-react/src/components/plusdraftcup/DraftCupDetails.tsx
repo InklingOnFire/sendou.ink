@@ -177,7 +177,10 @@ const DetailedMapCard: React.FC<DetailedMapCardProps> = ({
                     {t("draft;paintShort")}
                   </Flex>
                   <Flex gridArea="3 / 2 / 4 / 3" justifyContent="center">
-                    <WeaponImage englishName={player.weapon} size="SMALL" />
+                    <WeaponImage
+                      englishName={player.weapon}
+                      weaponSize="SMALL"
+                    />
                   </Flex>{" "}
                   {player.gear.map(gearMap)}
                   {player.main_abilities.map(abilityMap)}
