@@ -12,7 +12,6 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title }) => {
   return (
     <>
       <Heading
-        className="shadow"
         borderLeftColor={themeColorWithShade}
         borderLeftWidth="5px"
         pl="5px"
