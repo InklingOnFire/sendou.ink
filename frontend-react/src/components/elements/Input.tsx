@@ -1,9 +1,11 @@
 import {
   Box,
   Input as ChakraInput,
+  InputProps as ChakraInputProps,
   InputGroup,
   InputLeftAddon,
   InputLeftElement,
+  InputRightElement,
 } from "@chakra-ui/core"
 import React, { useContext } from "react"
 import { IconType } from "react-icons/lib/cjs"
@@ -13,16 +15,17 @@ import Label from "./Label"
 interface InputProps {
   value?: string
   setValue: (value: string) => void
-  label: string
+  label?: string
   limit?: number
   required?: boolean
   disabled?: boolean
   textLeft?: string
   size?: "sm" | "md" | "lg"
   icon?: IconType
+  iconRight?: IconType
 }
 
-const Input: React.FC<InputProps> = ({
+const Input: React.FC<ChakraInputProps<HTMLInputElement> & InputProps> = ({
   value,
   setValue,
   label,
@@ -32,6 +35,8 @@ const Input: React.FC<InputProps> = ({
   textLeft,
   size,
   icon,
+  iconRight,
+  ...props
 }) => {
   const { themeColorHex, grayWithShade, darkerBgColor, textColor } = useContext(
     MyThemeContext
@@ -58,9 +63,15 @@ const Input: React.FC<InputProps> = ({
           focusBorderColor={themeColorHex}
           _hover={{}}
           background={darkerBgColor}
-          borderColor="#CCCCCC"
           size={size}
+          {...props}
         />
+        {iconRight && (
+          <InputRightElement
+            color="white"
+            children={<Box as={iconRight} color={textColor} />}
+          />
+        )}
       </InputGroup>
       {limit && (
         <Box

@@ -4,19 +4,37 @@ import { Box, Flex } from "@chakra-ui/core"
 import WeaponImage from "../common/WeaponImage"
 import MyThemeContext from "../../themeContext"
 import { Link } from "@reach/router"
+import { Weapon } from "../../types"
 
 interface NavWeaponSelectorProps {
   linkTo?: string
   weaponCode?: string
+  filter: string
 }
 
 const NavWeaponSelector: React.FC<NavWeaponSelectorProps> = ({
   linkTo = "/",
+  filter,
 }) => {
   const { grayWithShade } = useContext(MyThemeContext)
+
+  const filterLower = filter.toLowerCase()
+  const filteredOptions = weaponSelectOptions.reduce(
+    (
+      acc: { label: string; options: { label: Weapon; value: Weapon }[] }[],
+      category
+    ) => {
+      const options = category.options.filter((option) =>
+        option.value.toLowerCase().includes(filterLower)
+      )
+      if (!options.length) return acc
+      return [...acc, { ...category, options }]
+    },
+    []
+  )
   return (
     <Box>
-      {weaponSelectOptions.map((category) => (
+      {filteredOptions.map((category) => (
         <React.Fragment key={category.label}>
           <Box
             textTransform="uppercase"

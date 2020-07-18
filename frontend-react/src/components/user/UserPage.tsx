@@ -117,7 +117,7 @@ const UserPage: React.FC<RouteComponentProps & UserPageProps> = ({ id }) => {
       content: (
         <TabPanel key={1}>
           <BuildTab
-            builds={builds.sort((a, b) => {
+            builds={builds.slice().sort((a, b) => {
               const weaponPool = user.weapons
               if (weaponPool) {
                 if (
