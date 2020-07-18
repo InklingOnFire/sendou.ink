@@ -7,6 +7,7 @@ import { Link } from "@reach/router"
 
 interface NavWeaponSelectorProps {
   linkTo?: string
+  weaponCode?: string
 }
 
 const NavWeaponSelector: React.FC<NavWeaponSelectorProps> = ({
@@ -29,10 +30,9 @@ const NavWeaponSelector: React.FC<NavWeaponSelectorProps> = ({
           </Box>
           <Flex wrap="wrap">
             {category.options.map((wpn) => (
-              <Link to={linkTo + weaponToLinkCode[wpn.value]}>
+              <Link key={wpn.value} to={linkTo + weaponToLinkCode[wpn.value]}>
                 <WeaponImage
                   m="0.4rem"
-                  key={wpn.value}
                   englishName={wpn.value}
                   weaponSize="SMALL"
                 />

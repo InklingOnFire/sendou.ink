@@ -48,7 +48,7 @@ const IconNav: React.FC = () => {
       flexDir="column"
     >
       {iconNavItems.map(({ route, icon }) => (
-        <Link to={route}>
+        <Link key={route} to={route}>
           <PseudoBox
             w="48px"
             h="48px"
@@ -57,7 +57,7 @@ const IconNav: React.FC = () => {
             transition="0.3s transform"
             _hover={{ transform: "scale(1.15)" }}
           >
-            <Image ignoreFallback key={route} src={icon} />
+            <Image ignoreFallback src={icon} />
           </PseudoBox>
         </Link>
       ))}

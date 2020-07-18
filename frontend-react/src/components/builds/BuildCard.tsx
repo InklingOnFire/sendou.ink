@@ -26,7 +26,6 @@ import Flag from "../common/Flag"
 
 interface BuildCardProps {
   build: Build
-  defaultToAPView: boolean
   showUser?: boolean
   canModify?: boolean
   setBuildBeingEdited?: (build: Build) => void
@@ -36,7 +35,6 @@ interface BuildCardProps {
 
 const BuildCard: React.FC<BuildCardProps & BoxProps> = ({
   build,
-  defaultToAPView,
   canModify,
   showUser,
   setBuildBeingEdited,
@@ -44,19 +42,16 @@ const BuildCard: React.FC<BuildCardProps & BoxProps> = ({
   onShowAllByUser,
   ...props
 }) => {
-  const [apView, setApView] = useState(defaultToAPView)
+  const [apView, setApView] = useState(false)
   const [showStats, setShowStats] = useState(false)
   const {
     themeColor,
     darkerBgColor,
+    bgColor,
     grayWithShade,
     themeColorWithShade,
   } = useContext(MyThemeContext)
   const { t } = useTranslation()
-
-  useEffect(() => {
-    setApView(defaultToAPView)
-  }, [defaultToAPView])
 
   const username = build.discord_user!.username
 
@@ -66,6 +61,7 @@ const BuildCard: React.FC<BuildCardProps & BoxProps> = ({
         <BuildCardStats build={build} closeModal={() => setShowStats(false)} />
       )}
       <Box
+        bg={bgColor}
         w="300px"
         rounded="lg"
         overflow="hidden"

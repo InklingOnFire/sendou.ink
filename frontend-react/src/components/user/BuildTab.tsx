@@ -1,6 +1,5 @@
 import React from "react"
 import { Build } from "../../types"
-import useLocalStorage from "@rehooks/local-storage"
 import { useState } from "react"
 import { HeadGear, ClothingGear, ShoesGear, Ability } from "../../types"
 import BuildFormModal from "./BuildFormModal"
@@ -39,7 +38,6 @@ const BuildTab: React.FC<BuildTabProps> = ({
   canModifyBuilds,
   unlimitedBuilds,
 }) => {
-  const [APView] = useLocalStorage<boolean>("prefersAPView")
   const [formOpen, setFormOpen] = useState(false)
   const [buildBeingEdited, setBuildBeingEdited] = useState<Build | null>(null)
   const { t } = useTranslation()
@@ -80,7 +78,6 @@ const BuildTab: React.FC<BuildTabProps> = ({
             }}
             key={build.id}
             build={build}
-            defaultToAPView={APView !== null ? APView : false}
             m="0.5em"
           />
         ))}

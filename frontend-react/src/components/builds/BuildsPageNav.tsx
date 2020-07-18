@@ -5,7 +5,7 @@ import NavWeaponSelector from "../nav/NavWeaponSelector"
 const BuildsPageNav: React.FC = () => {
   return (
     <Box>
-      <NavWeaponSelector />
+      <NavWeaponSelector linkTo="/builds/" />
     </Box>
   )
 }

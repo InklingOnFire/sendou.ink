@@ -1,9 +1,9 @@
-import React, { ReactNode, useContext, Suspense } from "react"
 import { Box } from "@chakra-ui/core"
+import { RouteComponentProps, Router } from "@reach/router"
+import React, { ReactNode, Suspense, useContext } from "react"
 import MyThemeContext from "../../themeContext"
-import { Router, RouteComponentProps } from "@reach/router"
-import Loading from "../common/Loading"
 import BuildsPageNav from "../builds/BuildsPageNav"
+import Loading from "../common/Loading"
 import "./Nav.css"
 
 interface NavWithContentProps {
@@ -34,7 +34,7 @@ const NavWithContent: React.FC<RouteComponentProps & NavWithContentProps> = ({
 }
 
 const SecondaryNav: React.FC = () => {
-  const { bgColor, themeColorWithShade } = useContext(MyThemeContext)
+  const { bgColor } = useContext(MyThemeContext)
   return (
     <Box
       flexShrink={0}
@@ -51,7 +51,7 @@ const SecondaryNav: React.FC = () => {
       <Suspense fallback={<Loading />}>
         <Router>
           <NavWithContent
-            path="/builds"
+            path="/builds/:weaponCode"
             title="Builds"
             content={<BuildsPageNav />}
           />

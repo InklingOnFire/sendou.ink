@@ -1,46 +1,47 @@
-import React from "react"
+import { useQuery } from "@apollo/client"
+import { Box, Button, Flex, Heading } from "@chakra-ui/core"
+import { redirectTo, RouteComponentProps } from "@reach/router"
+import React, { useContext, useState } from "react"
 import { Helmet } from "react-helmet-async"
-import { RouteComponentProps } from "@reach/router"
-import WeaponSelector from "../common/WeaponSelector"
-import { useState } from "react"
+import { useTranslation } from "react-i18next"
+import InfiniteScroll from "react-infinite-scroller"
+import { SEARCH_FOR_BUILDS } from "../../graphql/queries/searchForBuilds"
+import MyThemeContext from "../../themeContext"
 import {
-  Weapon,
   Ability,
+  Build,
   SearchForBuildsData,
   SearchForBuildsVars,
-  Build,
 } from "../../types"
-import { Box, Flex, Heading, FormLabel, Switch, Button } from "@chakra-ui/core"
-import { useContext } from "react"
-import MyThemeContext from "../../themeContext"
-import useLocalStorage from "@rehooks/local-storage"
-import { useQuery } from "@apollo/client"
-import { SEARCH_FOR_BUILDS } from "../../graphql/queries/searchForBuilds"
-import Loading from "../common/Loading"
+import { linkCodeToWeapon } from "../../utils/lists"
 import Error from "../common/Error"
-import BuildCard from "./BuildCard"
-import InfiniteScroll from "react-infinite-scroller"
-import PageHeader from "../common/PageHeader"
-import AbilitySelector from "./AbilitySelector"
+import Loading from "../common/Loading"
 import Alert from "../elements/Alert"
-import { useTranslation } from "react-i18next"
+import AbilitySelector from "./AbilitySelector"
+import BuildCard from "./BuildCard"
 
-const BuildsPage: React.FC<RouteComponentProps> = () => {
+interface BuildsPageProps {
+  weaponCode?: string
+}
+
+const BuildsPage: React.FC<BuildsPageProps & RouteComponentProps> = ({
+  weaponCode,
+}) => {
   const { themeColor } = useContext(MyThemeContext)
   const { t } = useTranslation()
-  const [weapon, setWeapon] = useState<Weapon | null>(null)
   const [buildsToShow, setBuildsToShow] = useState(10)
   const [abilities, setAbilities] = useState<Ability[]>([])
   const [expandedUsers, setExpandedUsers] = useState<Set<string>>(new Set())
-  const [prefersAPView, setAPPreference] = useLocalStorage<boolean>(
-    "prefersAPView"
-  )
+
+  const weapon = linkCodeToWeapon[weaponCode ?? ""]
+
+  if (!weaponCode) redirectTo("/404")
 
   const { data, error, loading } = useQuery<
     SearchForBuildsData,
     SearchForBuildsVars
   >(SEARCH_FOR_BUILDS, {
-    variables: { weapon: weapon as any },
+    variables: { weapon: weapon },
     skip: !weapon,
   })
   if (error) return <Error errorMessage={error.message} />
@@ -84,25 +85,6 @@ const BuildsPage: React.FC<RouteComponentProps> = () => {
           sendou.ink
         </title>
       </Helmet>
-      <PageHeader title={t("navigation;Builds")} />
-      <FormLabel htmlFor="apview">
-        {t("builds;Default to Ability Point view")}
-      </FormLabel>
-      <Switch
-        id="apview"
-        color={themeColor}
-        isChecked={prefersAPView === null ? false : prefersAPView}
-        onChange={() => setAPPreference(!prefersAPView)}
-      />
-      <Box mt="1em">
-        <WeaponSelector
-          label={t("builds;Select a weapon to start viewing builds")}
-          value={weapon}
-          setValue={(weapon: string) => setWeapon(weapon as Weapon)}
-          autoFocus
-          menuIsOpen={!weapon}
-        />
-      </Box>
       {weapon && (
         <Box mt="1em">
           <AbilitySelector abilities={abilities} setAbilities={setAbilities} />
@@ -125,9 +107,6 @@ const BuildsPage: React.FC<RouteComponentProps> = () => {
                     <BuildCard
                       key={build.id}
                       build={build}
-                      defaultToAPView={
-                        prefersAPView === null ? false : prefersAPView
-                      }
                       showUser
                       otherBuildCount={
                         usersOtherBuilds[build.discord_user!.discord_id]
@@ -156,9 +135,6 @@ const BuildsPage: React.FC<RouteComponentProps> = () => {
                         <BuildCard
                           key={build.id}
                           build={build}
-                          defaultToAPView={
-                            prefersAPView === null ? false : prefersAPView
-                          }
                           showUser
                           m="0.5em"
                         />

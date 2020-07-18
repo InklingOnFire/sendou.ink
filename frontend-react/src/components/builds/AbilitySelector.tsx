@@ -80,7 +80,7 @@ const AbilitySelector: React.FC<AbilitySelectorProps> = ({
       )}
     </>
   ) : (
-    <Button icon={FaFilter} onClick={() => setShow(!show)}>
+    <Button outlined icon={FaFilter} onClick={() => setShow(!show)}>
       {t("builds;Filter by ability")}
     </Button>
   )

@@ -45,7 +45,7 @@ const Routes: React.FC = () => {
           <UserSearchPage path="/u" />
           <MarkdownHelpPage path="/markdown" />
           <TeamPage path="/t/:name" />
-          <BuildsPage path="/builds" />
+          <BuildsPage path="/builds/:weaponCode" />
           <BuildAnalyzerPage path="/analyzer" />
           <EventPage path="/event" />
           <MapPlannerPage path="/plans" />
