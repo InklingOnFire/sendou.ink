@@ -1,12 +1,11 @@
+import { Box, Flex, Image, PseudoBox } from "@chakra-ui/core"
 import React, { useContext } from "react"
-import { Box, Image, Flex, PseudoBox } from "@chakra-ui/core"
-import MyThemeContext from "../../themeContext"
-import { months } from "../../utils/lists"
+import { useTranslation } from "react-i18next"
 import trophy from "../../assets/trophy.png"
-import WeaponImage from "../common/WeaponImage"
+import MyThemeContext from "../../themeContext"
 import { Weapon } from "../../types"
 import Flag from "../common/Flag"
-import { useTranslation } from "react-i18next"
+import WeaponImage from "../common/WeaponImage"
 
 interface TournamentCardProps {
   tournament: {

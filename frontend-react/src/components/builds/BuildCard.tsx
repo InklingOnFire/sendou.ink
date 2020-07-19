@@ -48,7 +48,6 @@ const BuildCard: React.FC<BuildCardProps & BoxProps> = ({
   const {
     themeColor,
     darkerBgColor,
-    bgColor,
     grayWithShade,
     themeColorWithShade,
   } = useContext(MyThemeContext)

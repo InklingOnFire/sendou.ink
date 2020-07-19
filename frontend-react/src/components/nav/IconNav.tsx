@@ -1,12 +1,12 @@
+import { Flex, Image, PseudoBox } from "@chakra-ui/core"
+import { Link } from "@reach/router"
 import React from "react"
-import { Box, Flex, PseudoBox, Image } from "@chakra-ui/core"
+import analyzerIcon from "../../assets/navIcons/analyzer.png"
+import buildsIcon from "../../assets/navIcons/builds.png"
 import calendarIcon from "../../assets/navIcons/calendar.png"
 import plansIcon from "../../assets/navIcons/plans.png"
-import buildsIcon from "../../assets/navIcons/builds.png"
-import analyzerIcon from "../../assets/navIcons/analyzer.png"
-import xsearchIcon from "../../assets/navIcons/xsearch.png"
 import tournamentsIcon from "../../assets/navIcons/tournaments.png"
-import { Link } from "@reach/router"
+import xsearchIcon from "../../assets/navIcons/xsearch.png"
 
 const iconNavItems = [
   {

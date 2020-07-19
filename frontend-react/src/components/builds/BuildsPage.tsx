@@ -7,12 +7,7 @@ import { useTranslation } from "react-i18next"
 import InfiniteScroll from "react-infinite-scroller"
 import { SEARCH_FOR_BUILDS } from "../../graphql/queries/searchForBuilds"
 import MyThemeContext from "../../themeContext"
-import {
-  Ability,
-  Build,
-  SearchForBuildsData,
-  SearchForBuildsVars,
-} from "../../types"
+import { Build, SearchForBuildsData, SearchForBuildsVars } from "../../types"
 import { linkCodeToWeapon } from "../../utils/lists"
 import Error from "../common/Error"
 import Loading from "../common/Loading"

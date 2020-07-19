@@ -1,9 +1,8 @@
-import { Box, Flex } from "@chakra-ui/core"
 import { Link } from "@reach/router"
 import React, { useContext } from "react"
+import { IconType } from "react-icons/lib"
 import MyThemeContext from "../../themeContext"
 import Button from "../elements/Button"
-import { IconType } from "react-icons/lib"
 
 interface NavLinkProps {
   linkTo: string

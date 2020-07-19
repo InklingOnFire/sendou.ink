@@ -9,9 +9,7 @@ import {
 import MyThemeContext from "../../themeContext"
 import { Link } from "@reach/router"
 
-interface CalendarPageNavProps {}
-
-const CalendarPageNav: React.FC<CalendarPageNavProps> = ({}) => {
+const CalendarPageNav: React.FC = () => {
   const { i18n } = useTranslation()
   const { grayWithShade } = useContext(MyThemeContext)
   const { data } = useQuery<UpcomingEventsData>(UPCOMING_EVENTS)
