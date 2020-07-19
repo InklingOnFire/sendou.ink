@@ -2,17 +2,17 @@ import { useQuery } from "@apollo/client"
 import { Box, Flex, Heading, Image } from "@chakra-ui/core"
 import { Link } from "@reach/router"
 import React, { useContext, useState } from "react"
-import { FaEdit, FaInfo } from "react-icons/fa"
-import { FiClock } from "react-icons/fi"
+import { useTranslation } from "react-i18next"
+import { FiClock, FiEdit, FiInfo } from "react-icons/fi"
 import { CompetitiveFeedEvent } from "../../graphql/queries/upcomingEvents"
 import { USER } from "../../graphql/queries/user"
 import MyThemeContext from "../../themeContext"
 import { UserData } from "../../types"
+import Section from "../common/Section"
 import UserAvatar from "../common/UserAvatar"
 import Button from "../elements/Button"
 import Markdown from "../elements/Markdown"
 import TournamentModal from "./TournamentModal"
-import { useTranslation } from "react-i18next"
 
 interface TournamentInfoProps {
   tournament: CompetitiveFeedEvent
@@ -34,7 +34,7 @@ const TournamentInfo: React.FC<TournamentInfoProps> = ({
   const { data: userData } = useQuery<UserData>(USER)
 
   return (
-    <>
+    <Section my="1rem" w="48rem">
       {showModal && (
         <TournamentModal
           competitiveFeedEvent={tournament}
@@ -47,7 +47,13 @@ const TournamentInfo: React.FC<TournamentInfoProps> = ({
         </Heading>
         <Flex alignItems="center" color={grayWithShade}>
           <Box as={FiClock} mr="0.5em" color={themeColorWithShade} />
-          {date.toLocaleString(i18n.language)}
+          {date.toLocaleString(i18n.language, {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+          })}
         </Flex>
 
         <Flex alignItems="center" color={grayWithShade} my="0.5em">
@@ -67,27 +73,27 @@ const TournamentInfo: React.FC<TournamentInfoProps> = ({
           </Link>
         </Flex>
 
-        <Flex flexWrap="wrap" my="1em">
-          <Box mb="1em" mr="1em">
+        <Flex flexWrap="wrap" mt="1em">
+          <Box mr="1em">
             <a href={tournament.discord_invite_url}>
               <Button outlined icon={"discord" as any} width="150px">
                 {t("calendar;Join Discord")}
               </Button>
             </a>
           </Box>
-          <Box mb="1em" mr="1em">
+          <Box mr="1em">
             <Button
               outlined={expanded}
               onClick={() => setExpanded(!expanded)}
               width="150px"
-              icon={FaInfo}
+              icon={FiInfo}
             >
               {expanded ? t("calendar;Hide info") : t("calendar;Show info")}
             </Button>
           </Box>
           {userData?.user?.discord_id === poster.discord_id && (
             <Button
-              icon={FaEdit}
+              icon={FiEdit}
               width="150px"
               onClick={() => setShowModal(true)}
             >
@@ -96,7 +102,7 @@ const TournamentInfo: React.FC<TournamentInfoProps> = ({
           )}
         </Flex>
         {expanded && (
-          <>
+          <Box mt="1rem">
             <Markdown value={tournament.description} />
             {tournament.picture_url && (
               <Image
@@ -105,10 +111,10 @@ const TournamentInfo: React.FC<TournamentInfoProps> = ({
                 src={tournament.picture_url}
               />
             )}
-          </>
+          </Box>
         )}
       </>
-    </>
+    </Section>
   )
 }
 

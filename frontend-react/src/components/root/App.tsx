@@ -5,13 +5,14 @@ import {
   Box,
 } from "@chakra-ui/core"
 import useLocalStorage from "@rehooks/local-storage"
-import React, { useEffect } from "react"
+import React, { useEffect, Suspense } from "react"
 import { MyThemeProvider } from "../../themeContext"
 import { Theme, ThemeColor } from "../../types"
 import IconNav from "../nav/IconNav"
 import "./App.css"
 import Routes from "./Routes"
 import SecondaryNav from "../nav/SecondaryNav"
+import Loading from "../common/Loading"
 
 const App: React.FC = () => {
   const chakraTheme = useChakraTheme()
@@ -61,8 +62,10 @@ const App: React.FC = () => {
     <MyThemeProvider value={theme[colorMode]}>
       <Flex bg={theme[colorMode].darkerBgColor} h="100%">
         <IconNav />
-        <SecondaryNav />
-        <Box maxWidth="1100px" px={8} mx="auto" overflow="hidden">
+        <Suspense fallback={<Loading />}>
+          <SecondaryNav />
+        </Suspense>
+        <Box maxWidth="1100px" px={8} py={4} mx="auto" overflow="hidden">
           <Routes />
         </Box>
       </Flex>

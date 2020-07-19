@@ -11,18 +11,19 @@ import {
   PseudoBox,
 } from "@chakra-ui/core"
 import { Link } from "@reach/router"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useState } from "react"
+import { Trans, useTranslation } from "react-i18next"
 import { FiBarChart2, FiEdit, FiInfo, FiTarget } from "react-icons/fi"
 import { top500 } from "../../assets/imageImports"
 import MyThemeContext from "../../themeContext"
 import { Build } from "../../types"
+import Flag from "../common/Flag"
+import Section from "../common/Section"
 import WeaponImage from "../common/WeaponImage"
 import BuildCardStats from "./BuildCardStats"
 import Gears from "./Gears"
 import ViewAP from "./ViewAP"
 import ViewSlots from "./ViewSlots"
-import { useTranslation, Trans } from "react-i18next"
-import Flag from "../common/Flag"
 
 interface BuildCardProps {
   build: Build
@@ -60,15 +61,7 @@ const BuildCard: React.FC<BuildCardProps & BoxProps> = ({
       {showStats && (
         <BuildCardStats build={build} closeModal={() => setShowStats(false)} />
       )}
-      <Box
-        bg={bgColor}
-        w="300px"
-        rounded="lg"
-        overflow="hidden"
-        boxShadow="0px 0px 16px 6px rgba(0,0,0,0.1)"
-        p="20px"
-        {...props}
-      >
+      <Section w="300px" overflow="hidden" {...props}>
         <Box display="flex" flexDirection="column" h="100%">
           <Box display="flex" justifyContent="space-between">
             <Box width="24">
@@ -223,7 +216,7 @@ const BuildCard: React.FC<BuildCardProps & BoxProps> = ({
             )}
           </Box>
         </Box>
-      </Box>
+      </Section>
     </>
   )
 }

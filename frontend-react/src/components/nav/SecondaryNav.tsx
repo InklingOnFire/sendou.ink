@@ -5,6 +5,8 @@ import MyThemeContext from "../../themeContext"
 import BuildsPageNav from "../builds/BuildsPageNav"
 import Loading from "../common/Loading"
 import "./Nav.css"
+import CalendarPageNav from "../calendar/CalendarPageNav"
+import { useTranslation } from "react-i18next"
 
 interface NavWithContentProps {
   title: string
@@ -35,6 +37,7 @@ const NavWithContent: React.FC<RouteComponentProps & NavWithContentProps> = ({
 }
 
 const SecondaryNav: React.FC = () => {
+  const { t } = useTranslation()
   const { bgColor } = useContext(MyThemeContext)
   return (
     <Box
@@ -53,8 +56,13 @@ const SecondaryNav: React.FC = () => {
         <Router>
           <NavWithContent
             path="/builds/*weaponCode"
-            title="Builds"
+            title={t("navigation;Builds")}
             content={<BuildsPageNav />}
+          />
+          <NavWithContent
+            path="/calendar"
+            title={t("navigation;Calendar")}
+            content={<CalendarPageNav />}
           />
         </Router>
       </Suspense>
