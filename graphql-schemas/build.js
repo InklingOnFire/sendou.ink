@@ -114,14 +114,10 @@ const getBuildSearchCriteria = (args) => {
 const resolvers = {
   Query: {
     searchForBuilds: (root, args) => {
-      if (!args.discord_id && !args.weapon)
-        throw new UserInputError(
-          "Discord ID or weapon has to be in the arguments"
-        )
-
       return Build.find(getBuildSearchCriteria(args))
         .sort({ top: "desc", jpn: "desc", updatedAt: "desc" })
         .populate("discord_user")
+        .limit(500)
         .catch((e) => {
           throw new UserInputError(e.message, {
             invalidArgs: args,

@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client"
 import { Box, Button, Flex, Heading } from "@chakra-ui/core"
-import { redirectTo, RouteComponentProps } from "@reach/router"
+import { RouteComponentProps } from "@reach/router"
 import React, { useContext, useState } from "react"
 import { Helmet } from "react-helmet-async"
 import { useTranslation } from "react-i18next"
@@ -17,7 +17,6 @@ import { linkCodeToWeapon } from "../../utils/lists"
 import Error from "../common/Error"
 import Loading from "../common/Loading"
 import Alert from "../elements/Alert"
-import AbilitySelector from "./AbilitySelector"
 import BuildCard from "./BuildCard"
 
 interface BuildsPageProps {
@@ -30,36 +29,19 @@ const BuildsPage: React.FC<BuildsPageProps & RouteComponentProps> = ({
   const { themeColor } = useContext(MyThemeContext)
   const { t } = useTranslation()
   const [buildsToShow, setBuildsToShow] = useState(10)
-  const [abilities, setAbilities] = useState<Ability[]>([])
   const [expandedUsers, setExpandedUsers] = useState<Set<string>>(new Set())
 
   const weapon = linkCodeToWeapon[weaponCode ?? ""]
-
-  if (!weaponCode) redirectTo("/404")
 
   const { data, error, loading } = useQuery<
     SearchForBuildsData,
     SearchForBuildsVars
   >(SEARCH_FOR_BUILDS, {
     variables: { weapon: weapon },
-    skip: !weapon,
   })
   if (error) return <Error errorMessage={error.message} />
 
-  const buildsFilterByAbilities: Build[] = !data
-    ? []
-    : abilities.length > 0
-    ? data.searchForBuilds.filter((build) => {
-        const abilitiesInBuild = new Set([
-          ...build.headgear,
-          ...build.clothing,
-          ...build.shoes,
-        ])
-        return abilities.every((ability) =>
-          abilitiesInBuild.has(ability as any)
-        )
-      })
-    : data.searchForBuilds
+  const buildsFilterByAbilities: Build[] = !data ? [] : data.searchForBuilds
 
   const usersOtherBuilds: { [key: string]: Build[] } = {}
 
@@ -85,11 +67,6 @@ const BuildsPage: React.FC<BuildsPageProps & RouteComponentProps> = ({
           sendou.ink
         </title>
       </Helmet>
-      {weapon && (
-        <Box mt="1em">
-          <AbilitySelector abilities={abilities} setAbilities={setAbilities} />
-        </Box>
-      )}
       {loading && <Loading />}
       {buildsFilterByAbilities.length > 0 && data && (
         <>

@@ -5,6 +5,7 @@ import WeaponImage from "../common/WeaponImage"
 import MyThemeContext from "../../themeContext"
 import { Link } from "@reach/router"
 import { Weapon } from "../../types"
+import { useTranslation } from "react-i18next"
 
 interface NavWeaponSelectorProps {
   linkTo?: string
@@ -16,6 +17,7 @@ const NavWeaponSelector: React.FC<NavWeaponSelectorProps> = ({
   linkTo = "/",
   filter,
 }) => {
+  const { t } = useTranslation()
   const { grayWithShade } = useContext(MyThemeContext)
 
   const filterLower = filter.toLowerCase()
@@ -44,7 +46,7 @@ const NavWeaponSelector: React.FC<NavWeaponSelectorProps> = ({
             py="0.5rem"
             ml="0.4rem"
           >
-            {category.label}
+            {t(`builds;${category.label}`)}
           </Box>
           <Flex wrap="wrap">
             {category.options.map((wpn) => (

@@ -1,5 +1,5 @@
-import React, { Suspense, lazy } from "react"
 import { Router } from "@reach/router"
+import React, { lazy, Suspense } from "react"
 import Loading from "../common/Loading"
 import NotFound from "./NotFound"
 import { ScrollToTop } from "./ScrollToTop"
@@ -45,7 +45,7 @@ const Routes: React.FC = () => {
           <UserSearchPage path="/u" />
           <MarkdownHelpPage path="/markdown" />
           <TeamPage path="/t/:name" />
-          <BuildsPage path="/builds/:weaponCode" />
+          <BuildsPage path="/builds/*weaponCode" />
           <BuildAnalyzerPage path="/analyzer" />
           <EventPage path="/event" />
           <MapPlannerPage path="/plans" />

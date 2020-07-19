@@ -23,7 +23,8 @@ const NavWithContent: React.FC<RouteComponentProps & NavWithContentProps> = ({
         fontSize="1.2rem"
         borderLeftColor={themeColorWithShade}
         borderLeftWidth="5px"
-        pl="0.3rem"
+        pl="0.7rem"
+        ml="0.3rem"
         mb="0.5rem"
       >
         {title}
@@ -46,12 +47,12 @@ const SecondaryNav: React.FC = () => {
       w="200px"
       overflowY="scroll"
       bg={bgColor}
-      p="0.5rem"
+      p="1rem 0.5rem"
     >
       <Suspense fallback={<Loading />}>
         <Router>
           <NavWithContent
-            path="/builds/:weaponCode"
+            path="/builds/*weaponCode"
             title="Builds"
             content={<BuildsPageNav />}
           />

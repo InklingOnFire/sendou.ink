@@ -1262,7 +1262,8 @@
     "expandBuilds": "Show all {{otherBuildCount}} builds by {{username}}",
     "No more builds to show": "No more builds to show",
     "No builds found with the current filter": "No builds found with the current filter",
-    "Return to the top": "Return to the top"
+    "Return to the top": "Return to the top",
+    "New build": "New build"
   },
   "analyzer": {
     "currentPatch": "Patch {{CURRENT_PATCH}}",
