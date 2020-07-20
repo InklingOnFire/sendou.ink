@@ -10,7 +10,7 @@ import MyThemeContext from "../../themeContext"
 import { UserData } from "../../types"
 import Section from "../common/Section"
 import UserAvatar from "../common/UserAvatar"
-import Button from "../elements/Button"
+import IconButton from "../elements/IconButton"
 import Markdown from "../elements/Markdown"
 import TournamentModal from "./TournamentModal"
 
@@ -26,7 +26,7 @@ const TournamentInfo: React.FC<TournamentInfoProps> = ({
   expandedByDefault,
 }) => {
   const { themeColorWithShade, grayWithShade } = useContext(MyThemeContext)
-  const { t, i18n } = useTranslation()
+  const { i18n } = useTranslation()
   const [expanded, setExpanded] = useState(!!expandedByDefault)
   const [showModal, setShowModal] = useState(false)
   const poster = tournament.poster_discord_user
@@ -34,7 +34,7 @@ const TournamentInfo: React.FC<TournamentInfoProps> = ({
   const { data: userData } = useQuery<UserData>(USER)
 
   return (
-    <Section my="1rem" w="48rem">
+    <Section my="1rem" p="1.2rem 1rem 0.7rem">
       {showModal && (
         <TournamentModal
           competitiveFeedEvent={tournament}
@@ -42,78 +42,83 @@ const TournamentInfo: React.FC<TournamentInfoProps> = ({
         />
       )}
       <>
-        <Heading fontFamily="'Rubik', sans-serif" size="lg">
-          {tournament.name}
-        </Heading>
-        <Flex alignItems="center" color={grayWithShade}>
-          <Box as={FiClock} mr="0.5em" color={themeColorWithShade} />
-          {date.toLocaleString(i18n.language, {
-            weekday: "long",
-            month: "long",
-            day: "numeric",
-            hour: "numeric",
-            minute: "numeric",
-          })}
-        </Flex>
+        <Box mx="0.5rem">
+          <Heading
+            fontFamily="'Rubik', sans-serif"
+            size="lg"
+            color={!!expandedByDefault ? themeColorWithShade : undefined}
+          >
+            {tournament.name}
+          </Heading>
+          <Flex alignItems="center" color={grayWithShade} mt="0.5rem">
+            <Box as={FiClock} mr="0.5em" color={themeColorWithShade} />
+            {date.toLocaleString(i18n.language, {
+              weekday: "long",
+              month: "long",
+              day: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+            })}
+          </Flex>
 
-        <Flex alignItems="center" color={grayWithShade} my="0.5em">
-          {poster.avatar && (
-            <Box mr="0.5em">
-              <UserAvatar
-                name={poster.username}
-                src={poster.avatar}
-                size="sm"
-              />
-            </Box>
-          )}{" "}
-          <Link to={`/u/${poster.discord_id}`}>
-            <Box>
-              {poster.username}#{poster.discriminator}
-            </Box>
-          </Link>
-        </Flex>
+          <Flex
+            alignItems="center"
+            color={grayWithShade}
+            mt="1.1rem"
+            mb="0.5rem"
+          >
+            {poster.avatar && (
+              <Box mr="0.5em">
+                <UserAvatar
+                  name={poster.username}
+                  src={poster.avatar}
+                  size="sm"
+                />
+              </Box>
+            )}{" "}
+            <Link to={`/u/${poster.discord_id}`}>
+              <Box>
+                {poster.username}#{poster.discriminator}
+              </Box>
+            </Link>
+          </Flex>
+        </Box>
 
-        <Flex flexWrap="wrap" mt="1em">
+        <Flex>
           <Box mr="1em">
             <a href={tournament.discord_invite_url}>
-              <Button outlined icon={"discord" as any} width="150px">
-                {t("calendar;Join Discord")}
-              </Button>
+              <IconButton colored icon={"discord" as any} />
             </a>
           </Box>
           <Box mr="1em">
-            <Button
-              outlined={expanded}
-              onClick={() => setExpanded(!expanded)}
-              width="150px"
+            <IconButton
+              colored
               icon={FiInfo}
-            >
-              {expanded ? t("calendar;Hide info") : t("calendar;Show info")}
-            </Button>
+              onClick={() => setExpanded(!expanded)}
+            />
           </Box>
           {userData?.user?.discord_id === poster.discord_id && (
-            <Button
+            <IconButton
+              colored
               icon={FiEdit}
-              width="150px"
               onClick={() => setShowModal(true)}
-            >
-              {t("calendar;Edit")}
-            </Button>
+            />
           )}
         </Flex>
-        {expanded && (
-          <Box mt="1rem">
-            <Markdown value={tournament.description} />
-            {tournament.picture_url && (
-              <Image
-                borderRadius="5px"
-                maxH="500px"
-                src={tournament.picture_url}
-              />
-            )}
-          </Box>
-        )}
       </>
+      {expanded && (
+        <Box mt="1rem" mx="0.5rem">
+          <Markdown value={tournament.description} />
+          {tournament.picture_url && (
+            <Image
+              borderRadius="5px"
+              maxH="500px"
+              mx="auto"
+              src={tournament.picture_url}
+            />
+          )}
+        </Box>
+      )}
     </Section>
   )
 }

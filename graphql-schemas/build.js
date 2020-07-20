@@ -114,8 +114,12 @@ const getBuildSearchCriteria = (args) => {
 const resolvers = {
   Query: {
     searchForBuilds: (root, args) => {
+      const sortCriteria =
+        !args.discord_id && !args.weapon
+          ? { jpn: "desc", top: "desc", updatedAt: "desc" }
+          : { top: "desc", jpn: "desc", updatedAt: "desc" }
       return Build.find(getBuildSearchCriteria(args))
-        .sort({ top: "desc", jpn: "desc", updatedAt: "desc" })
+        .sort(sortCriteria)
         .populate("discord_user")
         .limit(500)
         .catch((e) => {

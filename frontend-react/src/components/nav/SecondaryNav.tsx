@@ -41,6 +41,7 @@ const SecondaryNav: React.FC = () => {
   const { bgColor } = useContext(MyThemeContext)
   return (
     <Box
+      display={["none", null, "block"]}
       flexShrink={0}
       className="hide-scroll"
       top={0}

@@ -41,8 +41,6 @@ const CalendarPage: React.FC<RouteComponentProps> = () => {
 
   const timeNow = new Date().toTimeString()
 
-  console.log("searchParamsEventName", searchParamsEventName)
-
   return (
     <>
       <Helmet>

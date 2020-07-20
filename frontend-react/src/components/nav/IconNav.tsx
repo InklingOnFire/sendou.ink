@@ -38,6 +38,7 @@ const iconNavItems = [
 const IconNav: React.FC = () => {
   return (
     <Flex
+      display={["none", null, "flex"]}
       flexShrink={0}
       h="100vh"
       w={16}
