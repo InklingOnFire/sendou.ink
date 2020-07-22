@@ -10,6 +10,7 @@ import {
   UserData,
   PlayerInfoData,
   PlayerInfoVars,
+  Weapon,
 } from "../../types"
 import { SEARCH_FOR_BUILDS } from "../../graphql/queries/searchForBuilds"
 import {
@@ -23,6 +24,8 @@ import { PLAYER_INFO } from "../../graphql/queries/playerInfo"
 interface UserLayoutProps {
   id?: string
 }
+
+const MODES = ["SZ", "SZ", "TC", "RM", "CB"] as const
 
 const UserLayout: React.FC<RouteComponentProps & UserLayoutProps> = ({
   id,
@@ -67,6 +70,37 @@ const UserLayout: React.FC<RouteComponentProps & UserLayoutProps> = ({
             !!userData?.user?.discord_id &&
             userData?.user?.discord_id === data?.searchForUser?.discord_id
           }
+          buildCounts={buildsData?.searchForBuilds.reduce(
+            (acc: [Weapon, number][], cur) => {
+              let found = false
+              for (const weaponObj of acc) {
+                if (weaponObj[0] === cur.weapon) {
+                  weaponObj[1] = weaponObj[1] + 1
+                  found = true
+                  break
+                }
+              }
+
+              if (!found) acc.push([cur.weapon, 1])
+              return acc
+            },
+            []
+          )}
+          placementCounts={playerData?.playerInfo?.placements
+            .reduce((acc: ["SZ" | "TC" | "RM" | "CB", number][], cur) => {
+              let found = false
+              for (const placementObj of acc) {
+                if (placementObj[0] === MODES[cur.mode]) {
+                  placementObj[1] = placementObj[1] + 1
+                  found = true
+                  break
+                }
+              }
+
+              if (!found) acc.push([MODES[cur.mode], 1])
+              return acc
+            }, [])
+            .sort((a, b) => MODES.indexOf(a[0]) - MODES.indexOf(b[0]))}
         />
       }
       page={
