@@ -1,30 +1,27 @@
 import { Box, Flex, Heading } from "@chakra-ui/core"
-import React, { useContext, useState } from "react"
-import {
-  FaEdit,
-  FaGamepad,
-  FaTwitch,
-  FaTwitter,
-  FaYoutube,
-} from "react-icons/fa"
+import React, { useContext } from "react"
+import { useTranslation } from "react-i18next"
+import { FaGamepad, FaTwitch, FaTwitter, FaYoutube } from "react-icons/fa"
 import MyThemeContext from "../../themeContext"
 import { User } from "../../types"
 import Flag from "../common/Flag"
 import UserAvatar from "../common/UserAvatar"
 import WeaponImage from "../common/WeaponImage"
-import Button from "../elements/Button"
 import ProfileModal from "./ProfileModal"
-import { useTranslation } from "react-i18next"
 
 interface AvatarWithInfoProps {
   user: User
-  canEdit?: boolean
+  showModal: boolean
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const AvatarWithInfo: React.FC<AvatarWithInfoProps> = ({ user, canEdit }) => {
+const AvatarWithInfo: React.FC<AvatarWithInfoProps> = ({
+  user,
+  showModal,
+  setShowModal,
+}) => {
   const { grayWithShade } = useContext(MyThemeContext)
   const { t } = useTranslation()
-  const [showModal, setShowModal] = useState(false)
 
   function getSensString(motion: number | undefined, stick: number): string {
     const stickSensString = `${stick > 0 ? "+" : ""}${stick} ${t(
@@ -130,11 +127,6 @@ const AvatarWithInfo: React.FC<AvatarWithInfoProps> = ({ user, canEdit }) => {
             </Flex>
           </Flex>
         </Flex>
-        {canEdit && (
-          <Button icon={FaEdit} onClick={() => setShowModal(true)}>
-            {t("users;Edit profile")}
-          </Button>
-        )}
       </Flex>
     </>
   )

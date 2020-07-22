@@ -5,15 +5,25 @@ import NavLink from "../nav/NavLink"
 import NavSearch from "../nav/NavSearch"
 import NavWeaponSelector from "../nav/NavWeaponSelector"
 import { useTranslation } from "react-i18next"
+import { useQuery } from "@apollo/client"
+import { USER } from "../../graphql/queries/user"
+import { UserData } from "../../types"
 
 const BuildsPageNav: React.FC = () => {
   const { t } = useTranslation()
   const [filter, setFilter] = useState("")
+  const { data } = useQuery<UserData>(USER)
   return (
     <>
-      <Box mt="1rem" mb="2rem">
-        <NavLink icon={FiPlus} linkTo="/" linkText={t("builds;New build")} />
-      </Box>
+      {data?.user && (
+        <Box mt="1rem" mb="1rem">
+          <NavLink
+            icon={FiPlus}
+            linkTo={`/u/${data.user.discord_id}?build=new`}
+            linkText={t("builds;New build")}
+          />
+        </Box>
+      )}
       <NavSearch value={filter} setValue={(value) => setFilter(value)} />
       <NavWeaponSelector linkTo="/builds/" filter={filter} />
     </>

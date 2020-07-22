@@ -7,6 +7,11 @@ import calendarIcon from "../../assets/navIcons/calendar.png"
 import plansIcon from "../../assets/navIcons/plans.png"
 import tournamentsIcon from "../../assets/navIcons/tournaments.png"
 import xsearchIcon from "../../assets/navIcons/xsearch.png"
+import loginIcon from "../../assets/navIcons/login.png"
+import teamsIcon from "../../assets/navIcons/teams.png"
+import settingsIcon from "../../assets/navIcons/settings.png"
+import userSearchIcon from "../../assets/navIcons/usersearch.png"
+import freeAgentsIcon from "../../assets/navIcons/freeagents.png"
 
 const iconNavItems = [
   {
@@ -32,6 +37,26 @@ const iconNavItems = [
   {
     route: "tournaments",
     icon: tournamentsIcon,
+  },
+  {
+    route: "u",
+    icon: userSearchIcon,
+  },
+  {
+    route: "freeagents",
+    icon: freeAgentsIcon,
+  },
+  {
+    route: "t",
+    icon: teamsIcon,
+  },
+  {
+    route: "settings",
+    icon: settingsIcon,
+  },
+  {
+    route: "login",
+    icon: loginIcon,
   },
 ] as const
 

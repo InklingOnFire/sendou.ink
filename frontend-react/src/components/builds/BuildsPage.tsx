@@ -1,6 +1,5 @@
 import { useQuery } from "@apollo/client"
 import { Box, Button, Flex, Heading } from "@chakra-ui/core"
-import { RouteComponentProps } from "@reach/router"
 import React, { useContext, useState } from "react"
 import { Helmet } from "react-helmet-async"
 import { useTranslation } from "react-i18next"
@@ -15,12 +14,10 @@ import Alert from "../elements/Alert"
 import BuildCard from "./BuildCard"
 
 interface BuildsPageProps {
-  weaponCode?: string
+  weaponCode: string
 }
 
-const BuildsPage: React.FC<BuildsPageProps & RouteComponentProps> = ({
-  weaponCode,
-}) => {
+const BuildsPage: React.FC<BuildsPageProps> = ({ weaponCode }) => {
   const { themeColor } = useContext(MyThemeContext)
   const { t } = useTranslation()
   const [buildsToShow, setBuildsToShow] = useState(10)

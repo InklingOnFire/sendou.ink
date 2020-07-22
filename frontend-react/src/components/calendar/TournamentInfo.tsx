@@ -34,15 +34,15 @@ const TournamentInfo: React.FC<TournamentInfoProps> = ({
   const { data: userData } = useQuery<UserData>(USER)
 
   return (
-    <Section my="1rem" p="1.2rem 1rem 0.7rem">
+    <Section my="1rem">
       {showModal && (
         <TournamentModal
           competitiveFeedEvent={tournament}
           closeModal={() => setShowModal(false)}
         />
       )}
-      <>
-        <Box mx="0.5rem">
+      <Box textAlign="center">
+        <Box>
           <Heading
             fontFamily="'Rubik', sans-serif"
             size="lg"
@@ -50,7 +50,12 @@ const TournamentInfo: React.FC<TournamentInfoProps> = ({
           >
             {tournament.name}
           </Heading>
-          <Flex alignItems="center" color={grayWithShade} mt="0.5rem">
+          <Flex
+            alignItems="center"
+            justifyContent="center"
+            color={grayWithShade}
+            mt="0.5rem"
+          >
             <Box as={FiClock} mr="0.5em" color={themeColorWithShade} />
             {date.toLocaleString(i18n.language, {
               weekday: "long",
@@ -63,6 +68,7 @@ const TournamentInfo: React.FC<TournamentInfoProps> = ({
 
           <Flex
             alignItems="center"
+            justifyContent="center"
             color={grayWithShade}
             mt="1.1rem"
             mb="0.5rem"
@@ -84,13 +90,13 @@ const TournamentInfo: React.FC<TournamentInfoProps> = ({
           </Flex>
         </Box>
 
-        <Flex>
-          <Box mr="1em">
+        <Flex justifyContent="center">
+          <Box mx="1em">
             <a href={tournament.discord_invite_url}>
               <IconButton colored icon={"discord" as any} />
             </a>
           </Box>
-          <Box mr="1em">
+          <Box mx="1em">
             <IconButton
               colored
               icon={FiInfo}
@@ -105,7 +111,7 @@ const TournamentInfo: React.FC<TournamentInfoProps> = ({
             />
           )}
         </Flex>
-      </>
+      </Box>
       {expanded && (
         <Box mt="1rem" mx="0.5rem">
           <Markdown value={tournament.description} />

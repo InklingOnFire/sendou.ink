@@ -13,6 +13,8 @@ interface BuildTabProps {
   builds: Build[]
   canModifyBuilds: boolean
   unlimitedBuilds: boolean
+  showModal: boolean
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 type ExistingGearObject = Record<
@@ -37,8 +39,9 @@ const BuildTab: React.FC<BuildTabProps> = ({
   builds,
   canModifyBuilds,
   unlimitedBuilds,
+  showModal,
+  setShowModal,
 }) => {
-  const [formOpen, setFormOpen] = useState(false)
   const [buildBeingEdited, setBuildBeingEdited] = useState<Build | null>(null)
   const { t } = useTranslation()
 
@@ -50,20 +53,15 @@ const BuildTab: React.FC<BuildTabProps> = ({
 
   return (
     <>
-      {formOpen && (
+      {showModal && (
         <BuildFormModal
           existingGear={existingGear}
           closeModal={() => {
-            setFormOpen(false)
+            setShowModal(false)
             setBuildBeingEdited(null)
           }}
           buildBeingEdited={buildBeingEdited}
         />
-      )}
-      {canModifyBuilds && canAddBuilds && (
-        <Button onClick={() => setFormOpen(true)}>
-          {t("users;Add build")}
-        </Button>
       )}
       {canModifyBuilds && !canAddBuilds && (
         <Alert status="info">{t("users;tooManyBuilds")}</Alert>
@@ -74,7 +72,7 @@ const BuildTab: React.FC<BuildTabProps> = ({
             canModify={canModifyBuilds}
             setBuildBeingEdited={(build: Build) => {
               setBuildBeingEdited(build)
-              setFormOpen(true)
+              setShowModal(true)
             }}
             key={build.id}
             build={build}

@@ -15,7 +15,7 @@ import Loading from "../common/Loading"
 import SubHeader from "../common/SubHeader"
 import TournamentInfo from "./TournamentInfo"
 
-const CalendarPage: React.FC<RouteComponentProps> = () => {
+const CalendarPage: React.FC = () => {
   const { grayWithShade } = useContext(MyThemeContext)
   const { t } = useTranslation()
   const location = useLocation()

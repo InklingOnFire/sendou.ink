@@ -62,10 +62,7 @@ const App: React.FC = () => {
     <MyThemeProvider value={theme[colorMode]}>
       <Flex bg={theme[colorMode].darkerBgColor} h="100%">
         <IconNav />
-        <Suspense fallback={<Loading />}>
-          <SecondaryNav />
-        </Suspense>
-        <Box maxWidth="1100px" px={8} py={4} mx="auto" overflow="hidden">
+        <Box flexGrow={1}>
           <Routes />
         </Box>
       </Flex>

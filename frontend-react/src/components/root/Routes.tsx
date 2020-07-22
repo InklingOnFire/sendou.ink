@@ -5,12 +5,12 @@ import NotFound from "./NotFound"
 import { ScrollToTop } from "./ScrollToTop"
 
 const HomePage = lazy(() => import("../home/HomePage"))
-const UserPage = lazy(() => import("../user/UserPage"))
+const UserLayout = lazy(() => import("../user/UserLayout"))
 const UserSearchPage = lazy(() => import("../usersearch/UserSearchPage"))
 const MarkdownHelpPage = lazy(() => import("../markdown/MarkdownHelpPage"))
-const BuildsPage = lazy(() => import("../builds/BuildsPage"))
+const BuildsLayout = lazy(() => import("../builds/BuildsLayout"))
 const BuildAnalyzerPage = lazy(() => import("../analyzer/BuildAnalyzerPage"))
-const CalendarPage = lazy(() => import("../calendar/CalendarPage"))
+const CalendarLayout = lazy(() => import("../calendar/CalendarLayout"))
 const TournamentsPage = lazy(() => import("../tournaments/TournamentsPage"))
 const EventPage = lazy(() => import("../events/EventsPage"))
 const TournamentsDetailsPage = lazy(() =>
@@ -41,15 +41,15 @@ const Routes: React.FC = () => {
           <HomePage path="/" />
           <AdminPage path="/admin" />
           <TranslatePage path="/translate" />
-          <UserPage path="/u/:id" />
+          <UserLayout path="/u/:id" />
           <UserSearchPage path="/u" />
           <MarkdownHelpPage path="/markdown" />
           <TeamPage path="/t/:name" />
-          <BuildsPage path="/builds/*weaponCode" />
+          <BuildsLayout path="/builds/*weaponCode" />
           <BuildAnalyzerPage path="/analyzer" />
           <EventPage path="/event" />
           <MapPlannerPage path="/plans" />
-          <CalendarPage path="/calendar" />
+          <CalendarLayout path="/calendar" />
           <TournamentsPage path="/tournaments" />
           <TournamentsDetailsPage path="/tournaments/:id" />
           <FreeAgentsPage path="/freeagents" />

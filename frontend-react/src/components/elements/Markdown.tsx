@@ -33,7 +33,7 @@ const Markdown: React.FC<MarkdownProps> = ({ value }) => {
     return {
       paragraph: (props: any) => {
         const { children } = props
-        return <Text mb={2}>{children}</Text>
+        return <Text>{children}</Text>
       },
       emphasis: (props: any) => {
         const { children } = props
