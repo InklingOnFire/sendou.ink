@@ -12,7 +12,7 @@ const Section: React.FC<SectionProps & BoxProps> = ({ children, ...props }) => {
     <Box
       bg={bgColor}
       boxShadow="0px 0px 16px 6px rgba(0,0,0,0.1)"
-      p="1.2rem"
+      p="1.5rem"
       rounded="lg"
       {...props}
     >

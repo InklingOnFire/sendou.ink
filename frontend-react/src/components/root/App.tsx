@@ -40,8 +40,8 @@ const App: React.FC = () => {
     } as Theme,
     dark: {
       colorMode: "dark",
-      bgColor: "#282547",
-      darkerBgColor: "#1a1832",
+      bgColor: "#0e2a56",
+      darkerBgColor: "#031e3e",
       textColor: "#fffffe",
       borderStyle: "1px solid rgba(255, 255, 255, .2)",
       themeColorWithShade: `${themeColor}.200`,

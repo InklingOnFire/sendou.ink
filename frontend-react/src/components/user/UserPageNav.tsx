@@ -62,7 +62,7 @@ const UserPageNav: React.FC<UserPageNavProps> = ({
             {placementCounts.map(([mode, count]) => (
               <Flex key={mode} alignItems="center" m={2}>
                 <Image w="32px" h="32px" src={MODE_IMAGES.get(mode)} />
-                {count > 1 && <SmallHeader py={0}>x {count}</SmallHeader>}
+                <SmallHeader py={0}>x {count}</SmallHeader>
               </Flex>
             ))}
           </Flex>

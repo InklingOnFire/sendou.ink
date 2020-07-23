@@ -66,7 +66,7 @@ const IconNav: React.FC = () => {
       display={["none", null, "flex"]}
       flexShrink={0}
       h="100vh"
-      w={16}
+      w="4.5rem"
       top={0}
       position="sticky"
       alignItems="center"
