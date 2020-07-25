@@ -8,6 +8,7 @@ import {
   TabPanels,
   Tabs,
   Flex,
+  Image,
 } from "@chakra-ui/core"
 import { Redirect } from "@reach/router"
 import React, { useContext } from "react"
@@ -39,10 +40,12 @@ import AvatarWithInfo from "./AvatarWithInfo"
 import BuildTab from "./BuildTab"
 import XRankTab from "./XRankTab"
 import Section from "../common/Section"
+import xsearchIcon from "../../assets/navIcons/xsearch.png"
+import buildsIcon from "../../assets/navIcons/builds.png"
 
 interface Tab {
   id: number
-  icon: IconType
+  image: string
   title: JSX.Element
   content: JSX.Element
 }
@@ -117,7 +120,7 @@ const UserPage: React.FC<UserPageProps> = ({
   if (builds.length > 0 || userLean?.discord_id === user.discord_id) {
     tabs.push({
       id: 1,
-      icon: FaTshirt,
+      image: buildsIcon,
       title: (
         <>
           {t("navigation;Builds")}{" "}
@@ -163,7 +166,7 @@ const UserPage: React.FC<UserPageProps> = ({
   if (playerData?.playerInfo?.placements) {
     tabs.push({
       id: 2,
-      icon: FaTrophy,
+      image: xsearchIcon,
       title: (
         <>
           {t("users;X Rank Top 500")}{" "}
@@ -181,7 +184,7 @@ const UserPage: React.FC<UserPageProps> = ({
   } else if (userLean?.discord_id === user.discord_id) {
     tabs.push({
       id: 2,
-      icon: FaTrophy,
+      image: xsearchIcon,
       title: <>{t("users;X Rank Top 500")}</>,
       content: (
         <TabPanel key={2}>
@@ -225,13 +228,7 @@ const UserPage: React.FC<UserPageProps> = ({
         <TabList mb="1em">
           {tabs.map((tabObj) => (
             <Tab key={tabObj.id} color={textColor}>
-              <Box
-                as={tabObj.icon}
-                size="24px"
-                color={themeColorWithShade}
-                mr="7px"
-              />{" "}
-              {tabObj.title}
+              <Image src={tabObj.image} w="2rem" mr="0.5rem" /> {tabObj.title}
             </Tab>
           ))}
         </TabList>
