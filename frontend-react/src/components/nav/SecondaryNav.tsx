@@ -4,8 +4,8 @@ import MyThemeContext from "../../themeContext"
 import "./Nav.css"
 
 interface SecondaryNavProps {
-  title: string
-  children: ReactNode
+  title?: string
+  children?: ReactNode
 }
 
 const SecondaryNav: React.FC<SecondaryNavProps> = ({ title, children }) => {
@@ -25,17 +25,19 @@ const SecondaryNav: React.FC<SecondaryNavProps> = ({ title, children }) => {
       p="1rem 0.5rem"
     >
       <>
-        <Box
-          fontWeight="bold"
-          fontSize="1.2rem"
-          borderLeftColor={themeColorWithShade}
-          borderLeftWidth="5px"
-          pl="0.7rem"
-          ml="0.3rem"
-          mb="0.5rem"
-        >
-          {title}
-        </Box>
+        {title && (
+          <Box
+            fontWeight="bold"
+            fontSize="1.2rem"
+            borderLeftColor={themeColorWithShade}
+            borderLeftWidth="5px"
+            pl="0.7rem"
+            ml="0.3rem"
+            mb="0.5rem"
+          >
+            {title}
+          </Box>
+        )}
         {children}
       </>
     </Box>

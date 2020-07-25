@@ -1,17 +1,7 @@
-import React, { useState } from "react"
-import Layout from "../nav/Layout"
-import UserPageNav from "./UserPageNav"
-import UserPage from "./UserPage"
-import { RouteComponentProps, useLocation } from "@reach/router"
 import { useQuery } from "@apollo/client"
-import {
-  SearchForBuildsData,
-  SearchForBuildsVars,
-  UserData,
-  PlayerInfoData,
-  PlayerInfoVars,
-  Weapon,
-} from "../../types"
+import { RouteComponentProps, useLocation } from "@reach/router"
+import React, { useState, useEffect } from "react"
+import { PLAYER_INFO } from "../../graphql/queries/playerInfo"
 import { SEARCH_FOR_BUILDS } from "../../graphql/queries/searchForBuilds"
 import {
   SearchForUserData,
@@ -19,8 +9,19 @@ import {
   SEARCH_FOR_USER,
 } from "../../graphql/queries/searchForUser"
 import { USER } from "../../graphql/queries/user"
-import { PLAYER_INFO } from "../../graphql/queries/playerInfo"
+import {
+  PlayerInfoData,
+  PlayerInfoVars,
+  SearchForBuildsData,
+  SearchForBuildsVars,
+  UserData,
+  Weapon,
+} from "../../types"
 import { weapons } from "../../utils/lists"
+import Layout from "../nav/Layout"
+import UserPage from "./UserPage"
+import UserPageNav from "./UserPageNav"
+import { useTranslation } from "react-i18next"
 
 interface UserLayoutProps {
   id?: string
@@ -31,9 +32,10 @@ const MODES = ["SZ", "SZ", "TC", "RM", "CB"] as const
 const UserLayout: React.FC<RouteComponentProps & UserLayoutProps> = ({
   id,
 }) => {
+  const { t } = useTranslation()
   const location = useLocation()
   const [showEditUserModal, setShowEditUserModal] = useState(false)
-  const [showBuildModal, setShowBuildModal] = useState(false) //new URLSearchParams(location.search).get("build") === "new"
+  const [showBuildModal, setShowBuildModal] = useState(false)
 
   const { data } = useQuery<SearchForUserData, SearchForUserVars>(
     SEARCH_FOR_USER,
@@ -60,9 +62,17 @@ const UserLayout: React.FC<RouteComponentProps & UserLayoutProps> = ({
     }
   )
 
+  useEffect(() => {
+    if (!data || !userData) return
+    if (data.searchForUser?.discord_id !== userData.user?.discord_id) return
+    if (new URLSearchParams(location.search).get("build") !== "new") return
+
+    setShowBuildModal(true)
+  }, [data, location.search, userData])
+
   return (
     <Layout
-      titleKey="User's Page"
+      title={t("navigation;User's Page")}
       secondaryNav={
         <UserPageNav
           editProfile={() => setShowEditUserModal(true)}

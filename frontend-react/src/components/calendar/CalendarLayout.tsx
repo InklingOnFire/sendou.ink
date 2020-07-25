@@ -3,15 +3,17 @@ import React from "react"
 import Layout from "../nav/Layout"
 import CalendarPageNav from "./CalendarPageNav"
 import CalendarPage from "./CalendarPage"
+import { useTranslation } from "react-i18next"
 
-const BuildsLayout: React.FC<RouteComponentProps> = ({}) => {
+const CalendarLayout: React.FC<RouteComponentProps> = () => {
+  const { t } = useTranslation()
   return (
     <Layout
-      titleKey="Calendar"
+      title={t("navigation;Calendar")}
       secondaryNav={<CalendarPageNav />}
       page={<CalendarPage />}
     />
   )
 }
 
-export default BuildsLayout
+export default CalendarLayout

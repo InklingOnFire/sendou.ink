@@ -1,8 +1,8 @@
 import { Router } from "@reach/router"
 import React, { lazy, Suspense } from "react"
-import Loading from "../common/Loading"
 import NotFound from "./NotFound"
 import { ScrollToTop } from "./ScrollToTop"
+import LoadingLayout from "./LoadingLayout"
 
 const HomePage = lazy(() => import("../home/HomePage"))
 const UserLayout = lazy(() => import("../user/UserLayout"))
@@ -35,7 +35,7 @@ const AdminPage = lazy(() => import("../admin/AdminPage"))
 
 const Routes: React.FC = () => {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<LoadingLayout />}>
       <Router>
         <ScrollToTop path="/">
           <HomePage path="/" />

@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client"
 import { Box } from "@chakra-ui/core"
-import { RouteComponentProps, useLocation } from "@reach/router"
+import { useLocation } from "@reach/router"
 import React, { useContext, useEffect, useRef } from "react"
 import { Helmet } from "react-helmet-async"
 import { Trans, useTranslation } from "react-i18next"

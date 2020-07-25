@@ -1,18 +1,16 @@
 import {
+  Box,
   Flex,
   useColorMode,
   useTheme as useChakraTheme,
-  Box,
 } from "@chakra-ui/core"
 import useLocalStorage from "@rehooks/local-storage"
-import React, { useEffect, Suspense } from "react"
+import React, { useEffect } from "react"
 import { MyThemeProvider } from "../../themeContext"
 import { Theme, ThemeColor } from "../../types"
 import IconNav from "../nav/IconNav"
 import "./App.css"
 import Routes from "./Routes"
-import SecondaryNav from "../nav/SecondaryNav"
-import Loading from "../common/Loading"
 
 const App: React.FC = () => {
   const chakraTheme = useChakraTheme()

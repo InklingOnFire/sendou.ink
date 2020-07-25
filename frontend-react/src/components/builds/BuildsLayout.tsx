@@ -3,6 +3,7 @@ import React from "react"
 import Layout from "../nav/Layout"
 import BuildsPage from "./BuildsPage"
 import BuildsPageNav from "./BuildsPageNav"
+import { useTranslation } from "react-i18next"
 
 interface BuildsLayoutProps {
   weaponCode?: string
@@ -11,9 +12,10 @@ interface BuildsLayoutProps {
 const BuildsLayout: React.FC<RouteComponentProps & BuildsLayoutProps> = ({
   weaponCode,
 }) => {
+  const { t } = useTranslation()
   return (
     <Layout
-      titleKey="Builds"
+      title={t("navigation;Builds")}
       secondaryNav={<BuildsPageNav />}
       page={<BuildsPage weaponCode={weaponCode!} />}
     />

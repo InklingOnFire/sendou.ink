@@ -1,13 +1,10 @@
-import React from "react"
-import { Build } from "../../types"
-import { useState } from "react"
-import { HeadGear, ClothingGear, ShoesGear, Ability } from "../../types"
-import BuildFormModal from "./BuildFormModal"
-import Button from "../elements/Button"
-import Alert from "../elements/Alert"
-import BuildCard from "../builds/BuildCard"
 import { Box } from "@chakra-ui/core"
+import React, { useState } from "react"
 import { useTranslation } from "react-i18next"
+import { Ability, Build, ClothingGear, HeadGear, ShoesGear } from "../../types"
+import BuildCard from "../builds/BuildCard"
+import Alert from "../elements/Alert"
+import BuildFormModal from "./BuildFormModal"
 
 interface BuildTabProps {
   builds: Build[]
