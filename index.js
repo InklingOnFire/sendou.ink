@@ -13,7 +13,6 @@ const User = require("./mongoose-models/user")
 const Player = require("./mongoose-models/player")
 const path = require("path")
 const schema = require("./schema")
-const mockUser = require("./utils/mocks")
 
 mongoose.set("useFindAndModify", false)
 mongoose.set("useCreateIndex", true)
@@ -52,7 +51,6 @@ passport.use(
         }
       }
 
-      console.log("userToSave", userToSave)
       User.updateOne(
         { discord_id: userToSave.discord_id },
         userToSave,
@@ -70,9 +68,14 @@ passport.serializeUser(function (user, done) {
 })
 
 passport.deserializeUser(function (discord_id, done) {
-  User.findOne({ discord_id }, function (err, user) {
-    done(err, user)
-  })
+  User.findOne(
+    {
+      discord_id,
+    },
+    function (err, user) {
+      done(err, user)
+    }
+  )
 })
 
 console.log("connecting to MongoDB")
@@ -98,8 +101,8 @@ const server = new ApolloServer({
   playground: true,
   schema,
   context: ({ req }) => {
-    if (process.env.LOGGED_IN) {
-      return { user: mockUser }
+    if (process.env.HIJACKED_USER) {
+      return { user: User.findOne({ discord_id: process.env.HIJACKED_USER }) }
     }
     return { user: req.user }
   },
@@ -130,7 +133,7 @@ app.use(requireHTTPS)
 
 //https://www.npmjs.com/package/express-session
 
-let sess = {
+const sess = {
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,

@@ -5,11 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "startprod": "cross-env USE_PRODUCTION_DB=TRUE node index.js",
-    "withprod": "cross-env LOGGED_IN=TRUE USE_PRODUCTION_DB=TRUE node index.js",
-    "withdev": "cross-env LOGGED_IN=TRUE node index.js",
-    "watchdev": "cross-env LOGGED_IN=TRUE nodemon index.js",
-    "watchprod": "cross-env LOGGED_IN=TRUE USE_PRODUCTION_DB=TRUE nodemon index.js",
+    "dev": "cross-env USE_PRODUCTION_DB=TRUE HIJACKED_USER=79237403620945920 concurrently --kill-others \"nodemon index.js\" \"cd frontend-react && npm start\"",
     "build": "cd frontend-react && npm install && npm run build && mv build ../build",
     "testbuild": "rmdir /s /q build && cd frontend-react && npm run build && move build ../build"
   },
@@ -21,6 +17,7 @@
     "axios": "^0.19.2",
     "btoa": "^1.2.1",
     "compression": "^1.7.4",
+    "concurrently": "^5.2.0",
     "connect-mongo": "^3.2.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -38,5 +35,10 @@
   "devDependencies": {
     "cross-env": "^7.0.2",
     "nodemon": "^2.0.4"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "frontend-react/*"
+    ]
   }
 }

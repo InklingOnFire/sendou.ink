@@ -4,7 +4,6 @@ const Player = require("../mongoose-models/player")
 const Team = require("../mongoose-models/team")
 const countries = require("../utils/countries")
 const weapons = require("../utils/weapons")
-const mockUser = require("../utils/mocks")
 const { recalculateTeamsCountries } = require("./team")
 require("dotenv").config()
 
@@ -33,6 +32,7 @@ const typeDef = gql`
       bio: String
     ): Boolean
     updateAvatars(lohiToken: String!, toUpdate: [DiscordIdAvatar!]!): Boolean
+    updateHijackedUser(discordId: String!): Boolean
   }
 
   "The control sensitivity used in Splatoon 2"
@@ -99,12 +99,7 @@ const resolvers = {
     },
   },
   Query: {
-    user: (root, args, ctx) => {
-      if (process.env.LOGGED_IN) {
-        return mockUser
-      }
-      return ctx.user
-    },
+    user: (root, args, ctx) => ctx.user,
     searchForUser: (root, args) => {
       let searchCriteria = {}
       if (args.twitter) searchCriteria = { twitter_name: args.twitter }
@@ -266,6 +261,12 @@ const resolvers = {
           )
         )
       )
+
+      return true
+    },
+    updateHijackedUser: (root, args) => {
+      if (process.env.NODE_ENV !== "development") return false
+      process.env.HIJACKED_USER = args.discordId
 
       return true
     },
