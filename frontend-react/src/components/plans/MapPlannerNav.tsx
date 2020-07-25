@@ -17,7 +17,9 @@ interface MapPlannerNavProps {
 }
 
 const MapPlannerNav: React.FC<MapPlannerNavProps> = ({ bg, setBg }) => {
-  const { themeColor, grayWithShade } = useContext(MyThemeContext)
+  const { themeColor, grayWithShade, themeColorWithShade } = useContext(
+    MyThemeContext
+  )
   const { t } = useTranslation()
   const [filterStage, setFilterStage] = useState("")
   const filterLower = filterStage.toLowerCase()
@@ -66,7 +68,11 @@ const MapPlannerNav: React.FC<MapPlannerNavProps> = ({ bg, setBg }) => {
         .filter((stage) => stage.toLowerCase().includes(filterLower))
         .map((stage) => (
           <Box my="0.5rem" key={stage}>
-            <SmallHeader>{t(`game;${stage}`)}</SmallHeader>
+            <SmallHeader
+              color={bg.stage === stage ? themeColorWithShade : grayWithShade}
+            >
+              {t(`game;${stage}`)}
+            </SmallHeader>
             <Stack isInline ml="0.4rem" spacing={4}>
               <Image
                 style={{
