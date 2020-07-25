@@ -20,6 +20,7 @@ import {
 } from "../../graphql/queries/searchForUser"
 import { USER } from "../../graphql/queries/user"
 import { PLAYER_INFO } from "../../graphql/queries/playerInfo"
+import { weapons } from "../../utils/lists"
 
 interface UserLayoutProps {
   id?: string
@@ -70,8 +71,8 @@ const UserLayout: React.FC<RouteComponentProps & UserLayoutProps> = ({
             !!userData?.user?.discord_id &&
             userData?.user?.discord_id === data?.searchForUser?.discord_id
           }
-          buildCounts={buildsData?.searchForBuilds.reduce(
-            (acc: [Weapon, number][], cur) => {
+          buildCounts={buildsData?.searchForBuilds
+            .reduce((acc: [Weapon, number][], cur) => {
               let found = false
               for (const weaponObj of acc) {
                 if (weaponObj[0] === cur.weapon) {
@@ -83,9 +84,22 @@ const UserLayout: React.FC<RouteComponentProps & UserLayoutProps> = ({
 
               if (!found) acc.push([cur.weapon, 1])
               return acc
-            },
-            []
-          )}
+            }, [])
+            .sort((aTuple, bTuple) => {
+              const weaponPool = data?.searchForUser?.weapons ?? []
+              const a = aTuple[0]
+              const b = bTuple[0]
+              if (weaponPool) {
+                if (weaponPool.includes(a) && weaponPool.includes(b)) {
+                  return weaponPool.indexOf(a) - weaponPool.indexOf(b)
+                }
+                const poolComparision =
+                  weaponPool.indexOf(b) - weaponPool.indexOf(a)
+
+                if (poolComparision !== 0) return poolComparision
+              }
+              return weapons.indexOf(a) - weapons.indexOf(b)
+            })}
           placementCounts={playerData?.playerInfo?.placements
             .reduce((acc: ["SZ" | "TC" | "RM" | "CB", number][], cur) => {
               let found = false
