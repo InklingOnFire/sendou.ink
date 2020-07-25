@@ -177,7 +177,6 @@ export interface FreeAgentPost {
   looking_for?: string
   past_experience?: string
   description?: string
-  hidden: boolean
   createdAt: string
   discord_user: {
     username: string

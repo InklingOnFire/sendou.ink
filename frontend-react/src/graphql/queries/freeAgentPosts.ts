@@ -10,7 +10,6 @@ export const FREE_AGENT_POSTS: DocumentNode = gql`
       looking_for
       past_experience
       description
-      hidden
       createdAt
       discord_user {
         username

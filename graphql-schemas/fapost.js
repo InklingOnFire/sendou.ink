@@ -72,18 +72,19 @@ const typeDef = gql`
     "Free word about anything else"
     description: String
     discord_user: User!
-    hidden: Boolean!
     createdAt: String!
   }
 `
 
-const validateFAPost = args => {
+const validateFAPost = (args) => {
   if (canVCValues.indexOf(args.can_vc) === -1) {
     throw new UserInputError("Invalid 'can vc' value provided.")
   }
 
   const playstyles = args.playstyles ? [...new Set(args.playstyles)] : []
-  if (playstyles.some(playstyle => playstyleValues.indexOf(playstyle) === -1)) {
+  if (
+    playstyles.some((playstyle) => playstyleValues.indexOf(playstyle) === -1)
+  ) {
     throw new UserInputError("Invalid 'playstyles' value provided.")
   }
 
@@ -111,10 +112,14 @@ const validateFAPost = args => {
 const resolvers = {
   Query: {
     freeAgentPosts: (root, args) => {
-      return FAPost.find({})
+      const monthAgo = new Date().setMonth(new Date().getMonth() - 1)
+      return FAPost.find({
+        updatedAt: { $gte: monthAgo },
+        hidden: { $ne: true },
+      })
         .populate("discord_user")
         .sort({ createdAt: "desc" })
-        .catch(e => {
+        .catch((e) => {
           throw new UserInputError(e.message, {
             invalidArgs: args,
           })
@@ -128,27 +133,36 @@ const resolvers = {
       }
       if (!ctx.user) return defaultReturnable
 
-      const post = await FAPost.findOne({ discord_id: ctx.user.discord_id })
+      const monthAgo = new Date().setMonth(new Date().getMonth() - 1)
+      const [posts, likesGiven, likesReceived] = await Promise.all([
+        FAPost.find({
+          updatedAt: { $gte: monthAgo },
+          hidden: { $ne: true },
+        }),
+        FALike.find({
+          liker_discord_id: ctx.user.discord_id,
+        }).populate("liked_discord_user"),
+        FALike.find({
+          liked_discord_id: ctx.user.discord_id,
+        }),
+      ])
 
-      if (!post) {
+      const allDiscordIds = posts.map((post) => post.discord_id)
+
+      if (!allDiscordIds.includes(ctx.user.discord_id)) {
         return defaultReturnable
       }
 
-      let likesGiven = await FALike.find({
-        liker_discord_id: ctx.user.discord_id,
-      }).populate("liked_discord_user")
-
-      let likesReceived = await FALike.find({
-        liked_discord_id: ctx.user.discord_id,
-      })
-
-      const number_of_likes_received = likesReceived.length
-      const likerDiscordIds = likesReceived.map(
-        FALike => FALike.liker_discord_id
-      )
+      const likerDiscordIds = likesReceived
+        .filter((FALike) => allDiscordIds.includes(FALike.liker_discord_id))
+        .map((FALike) => FALike.liker_discord_id)
 
       const matched_discord_users = likesGiven.reduce((acc, cur) => {
-        if (likerDiscordIds.indexOf(cur.liked_discord_user.discord_id) === -1)
+        if (!allDiscordIds.includes(cur.liked_discord_user.discord_id)) {
+          return acc
+        }
+
+        if (!likerDiscordIds.includes(cur.liked_discord_user.discord_id))
           return acc
 
         return [...acc, cur.liked_discord_user]
@@ -156,8 +170,8 @@ const resolvers = {
 
       return {
         matched_discord_users,
-        number_of_likes_received,
-        liked_discord_ids: likesGiven.map(like => like.liked_discord_id),
+        number_of_likes_received: likesReceived.length,
+        liked_discord_ids: likesGiven.map((like) => like.liked_discord_id),
       }
     },
   },
@@ -169,41 +183,27 @@ const resolvers = {
 
       const existingFAPost = await FAPost.findOne({
         discord_id: ctx.user.discord_id,
-      }).catch(e => {
+        hidden: { $ne: true },
+      }).catch((e) => {
         throw new UserInputError(e.message, {
           invalidArgs: args,
         })
       })
 
       if (existingFAPost) {
-        if (!existingFAPost.hidden)
-          throw new UserInputError("Post already exists.")
-
-        const weekFromCreatingFAPost =
-          parseInt(existingFAPost.createdAt) + 604800000
-        if (existingFAPost.hidden) {
-          if (weekFromCreatingFAPost > Date.now()) {
-            throw new UserInputError(
-              "Week hasn't passed from the last free agent post."
-            )
-          } else {
-            await FAPost.findByIdAndRemove(existingFAPost._id).catch(e => {
-              throw new UserInputError(e.message, {
-                invalidArgs: args,
-              })
-            })
-          }
-        }
+        throw new UserInputError("Free agent post already exists")
       }
 
       const faPost = new FAPost({ ...args, discord_id: ctx.user.discord_id })
       args.user = ctx.user
       await Promise.race([faPost.save(), sendFAPostToDiscord(args)]).catch(
-        e => {
-          throw (new UserInputError(),
-          {
-            invalidArgs: args,
-          })
+        (e) => {
+          throw (
+            (new UserInputError(),
+            {
+              invalidArgs: args,
+            })
+          )
         }
       )
       return true
@@ -214,9 +214,9 @@ const resolvers = {
       validateFAPost(args)
 
       await FAPost.findOneAndUpdate(
-        { discord_id: ctx.user.discord_id, hidden: false },
+        { discord_id: ctx.user.discord_id, hidden: { $ne: true } },
         { ...args }
-      ).catch(e => {
+      ).catch((e) => {
         throw new UserInputError(error.message, {
           invalidArgs: args,
         })
@@ -227,23 +227,16 @@ const resolvers = {
     hideFreeAgentPost: async (root, args, ctx) => {
       if (!ctx.user) throw new AuthenticationError("Not logged in.")
 
-      const post = await FAPost.findOne({
-        discord_id: ctx.user.discord_id,
-      }).catch(e => {
-        throw new UserInputError(e.message, {
-          invalidArgs: args,
-        })
-      })
-
-      if (!post) throw new UserInputError("User has no posts.")
-      if (post.hidden) throw new UserInputError("Post already hidden.")
-
-      await FAPost.findByIdAndUpdate(post._id, { hidden: true }).catch(e => {
-        throw (new UserInputError(),
-        {
-          invalidArgs: args,
-        })
-      })
+      await FAPost.deleteMany({ discord_id: ctx.user.discord_id }).catch(
+        (e) => {
+          throw (
+            (new UserInputError(),
+            {
+              invalidArgs: args,
+            })
+          )
+        }
+      )
 
       await FALike.deleteMany({
         $or: [

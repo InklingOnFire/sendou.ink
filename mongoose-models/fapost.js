@@ -9,7 +9,6 @@ const faPostSchema = new mongoose.Schema(
     past_experience: String,
     looking_for: String,
     description: String,
-    hidden: { type: Boolean, default: false },
   },
   { timestamps: true }
 )

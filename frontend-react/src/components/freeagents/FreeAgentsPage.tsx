@@ -1,33 +1,31 @@
-import React, { useState } from "react"
 import { useQuery } from "@apollo/client"
-import { USER } from "../../graphql/queries/user"
-import {
-  UserData,
-  FreeAgentPostsData,
-  Weapon,
-  FreeAgentPost,
-} from "../../types"
-import { FREE_AGENT_POSTS } from "../../graphql/queries/freeAgentPosts"
-import Loading from "../common/Loading"
-import Error from "../common/Error"
-import { RouteComponentProps } from "@reach/router"
-import Posts from "./Posts"
-import PageHeader from "../common/PageHeader"
+import { Box, Collapse, Flex } from "@chakra-ui/core"
+import React, { useState } from "react"
 import { Helmet } from "react-helmet-async"
-import WeaponSelector from "../common/WeaponSelector"
-import RadioGroup from "../elements/RadioGroup"
-import { continents } from "../../utils/lists"
-import { Collapse, Flex, Box } from "@chakra-ui/core"
-import Button from "../elements/Button"
+import { useTranslation } from "react-i18next"
 import { FaFilter } from "react-icons/fa"
-import FAPostModal from "./FAPostModal"
 import {
   FreeAgentMatchesData,
   FREE_AGENT_MATCHES,
 } from "../../graphql/queries/freeAgentMatches"
-import Matches from "./Matches"
+import { FREE_AGENT_POSTS } from "../../graphql/queries/freeAgentPosts"
+import { USER } from "../../graphql/queries/user"
+import {
+  FreeAgentPost,
+  FreeAgentPostsData,
+  UserData,
+  Weapon,
+} from "../../types"
+import { continents } from "../../utils/lists"
+import Error from "../common/Error"
+import Loading from "../common/Loading"
+import WeaponSelector from "../common/WeaponSelector"
 import Alert from "../elements/Alert"
-import { useTranslation } from "react-i18next"
+import Button from "../elements/Button"
+import RadioGroup from "../elements/RadioGroup"
+import FAPostModal from "./FAPostModal"
+import Matches from "./Matches"
+import Posts from "./Posts"
 
 const playstyleToEnum = {
   "Frontline/Slayer": "FRONTLINE",
@@ -35,11 +33,18 @@ const playstyleToEnum = {
   "Backline/Anchor": "BACKLINE",
 } as const
 
-const FreeAgentsPage: React.FC<RouteComponentProps> = () => {
+interface FreeAgentsPageProps {
+  modalOpen: boolean
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const FreeAgentsPage: React.FC<FreeAgentsPageProps> = ({
+  modalOpen,
+  setModalOpen,
+}) => {
   const { t } = useTranslation()
   const [weapon, setWeapon] = useState<Weapon | null>(null)
   const [showFilters, setShowFilters] = useState(false)
-  const [showModal, setShowModal] = useState(false)
   const [playstyle, setPlaystyle] = useState<
     "Any" | "Frontline/Slayer" | "Midline/Support" | "Backline/Anchor"
   >("Any")
@@ -69,11 +74,6 @@ const FreeAgentsPage: React.FC<RouteComponentProps> = () => {
     (post) => post.discord_user.discord_id === userData!.user?.discord_id
   )
 
-  const buttonText =
-    ownFAPost && !ownFAPost.hidden
-      ? t("freeagents;Edit free agent post")
-      : t("freeagents;New free agent post")
-
   const altWeaponMap = new Map([
     ["Splattershot", "Hero Shot Replica"],
     ["Tentatek Splattershot", "Octo Shot Replica"],
@@ -88,8 +88,6 @@ const FreeAgentsPage: React.FC<RouteComponentProps> = () => {
   ])
 
   const postsFilter = (post: FreeAgentPost) => {
-    if (post.hidden) return false
-
     const usersWeapons = post.discord_user.weapons ?? []
 
     if (
@@ -137,47 +135,13 @@ const FreeAgentsPage: React.FC<RouteComponentProps> = () => {
     return true
   }
 
-  const getTopRightContent = () => {
-    if (!userData!.user)
-      return (
-        <Box maxW="300px">
-          <Alert status="info" mt="0">
-            {t("freeagents;loginPrompt")}
-          </Alert>
-        </Box>
-      )
-
-    if (ownFAPost && ownFAPost.hidden) {
-      const weekFromCreatingFAPost = parseInt(ownFAPost.createdAt) + 604800000
-      if (weekFromCreatingFAPost > Date.now()) {
-        return (
-          <Box maxW="300px">
-            <Alert status="info" mt="0">
-              {t("freeagents;pleaseWaitPrompt")}
-            </Alert>
-          </Box>
-        )
-      }
-    }
-
-    return (
-      <Box m="0.5em">
-        <Button onClick={() => setShowModal(true)}>{buttonText}</Button>
-      </Box>
-    )
-  }
-
   return (
     <>
       <Helmet>
         <title>{t("navigation;Free Agents")} | sendou.ink</title>
       </Helmet>
-      <PageHeader title={t("navigation;Free Agents")} />
-      {showModal && (
-        <FAPostModal
-          closeModal={() => setShowModal(false)}
-          post={ownFAPost?.hidden ? undefined : ownFAPost}
-        />
+      {modalOpen && (
+        <FAPostModal closeModal={() => setModalOpen(false)} post={ownFAPost} />
       )}
       <Flex justifyContent="space-between" flexWrap="wrap">
         <Box m="0.5em">
@@ -187,7 +151,6 @@ const FreeAgentsPage: React.FC<RouteComponentProps> = () => {
               : t("freeagents;Show filters")}
           </Button>
         </Box>
-        {getTopRightContent()}
       </Flex>
       <Collapse mt={4} isOpen={showFilters}>
         <Box maxW="600px" my="1em">
@@ -247,7 +210,7 @@ const FreeAgentsPage: React.FC<RouteComponentProps> = () => {
       )}
       <Posts
         posts={faPosts.filter(postsFilter)}
-        canLike={!!(ownFAPost && !ownFAPost.hidden)}
+        canLike={!!ownFAPost}
         likedUsersIds={
           !matchesData ? [] : matchesData.freeAgentMatches.liked_discord_ids
         }
