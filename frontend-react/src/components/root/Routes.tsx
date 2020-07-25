@@ -16,7 +16,7 @@ const EventPage = lazy(() => import("../events/EventsPage"))
 const TournamentsDetailsPage = lazy(() =>
   import("../tournaments/TournamentDetailsPage")
 )
-const MapPlannerPage = lazy(() => import("../plans/MapPlannerPage"))
+const MapPlannerLayout = lazy(() => import("../plans/MapPlannerLayout"))
 const FreeAgentsPage = lazy(() => import("../freeagents/FreeAgentsPage"))
 const TeamPage = lazy(() => import("../team/TeamPage"))
 const XSearch = lazy(() => import("../xsearch/Top500BrowserPage"))
@@ -48,7 +48,7 @@ const Routes: React.FC = () => {
           <BuildsLayout path="/builds/*weaponCode" />
           <BuildAnalyzerPage path="/analyzer" />
           <EventPage path="/event" />
-          <MapPlannerPage path="/plans" />
+          <MapPlannerLayout path="/plans" />
           <CalendarLayout path="/calendar" />
           <TournamentsPage path="/tournaments" />
           <TournamentsDetailsPage path="/tournaments/:id" />

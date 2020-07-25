@@ -3,6 +3,7 @@ import { RouteComponentProps } from "@reach/router"
 import { SketchField, Tools } from "@sendou/react-sketch"
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { Helmet } from "react-helmet-async"
+import { useTranslation } from "react-i18next"
 import {
   FaBomb,
   FaFileDownload,
@@ -14,12 +15,9 @@ import useBreakPoints from "../../hooks/useBreakPoints"
 import { Stage, Weapon } from "../../types"
 import weaponDict from "../../utils/english_internal.json"
 import Error from "../common/Error"
-import PageHeader from "../common/PageHeader"
 import Button from "../elements/Button"
 import DraggableToolsSelector from "./DraggableToolsSelector"
 import DraggableWeaponSelector from "./DraggableWeaponSelector"
-import MapSelect from "./MapSelect"
-import { useTranslation } from "react-i18next"
 
 export interface PlannerMapBg {
   view: "M" | "R"
@@ -94,8 +92,15 @@ const plannerMapBgToImage = (bg: PlannerMapBg) =>
     bg.stage
   )} ${bg.mode}.png`
 
-const MapPlannerPage: React.FC<RouteComponentProps> = () => {
-  let sketch: any = null
+interface MapPlannerPageProps {
+  bg: PlannerMapBg
+  setBg: React.Dispatch<React.SetStateAction<PlannerMapBg>>
+}
+
+const MapPlannerPage: React.FC<RouteComponentProps & MapPlannerPageProps> = ({
+  bg,
+  setBg,
+}) => {
   const isSmall = useBreakPoints(1127)
   const defaultValue = {
     shadowWidth: 0,
@@ -127,9 +132,10 @@ const MapPlannerPage: React.FC<RouteComponentProps> = () => {
   const [color, setColor] = useState("#f44336")
   const [canUndo, setCanUndo] = useState(false)
   const [canRedo, setCanRedo] = useState(false)
-  const [bg, setBg] = useState<PlannerMapBg>(REEF)
   const [controlledValue, setControlledValue] = useState(defaultValue)
   const { t } = useTranslation()
+
+  let sketch: any = null
 
   // doesn't work properly when coming back from another page - not sure why
   useLayoutEffect(() => {
@@ -268,7 +274,6 @@ const MapPlannerPage: React.FC<RouteComponentProps> = () => {
       <Helmet>
         <title>{t("navigation;Map Planner")} | sendou.ink</title>
       </Helmet>
-      <PageHeader title={t("navigation;Map Planner")} />
       <DraggableToolsSelector
         tool={tool}
         setTool={setTool}
@@ -313,7 +318,7 @@ const MapPlannerPage: React.FC<RouteComponentProps> = () => {
         >
           {t("plans;Clear drawings")}
         </Button>
-        <Box w="300px" />
+        <Box w="12rem" />
         <Button
           onClick={() => download(sketch.toDataURL(), "png")}
           icon={FaFileImage}
@@ -345,9 +350,6 @@ const MapPlannerPage: React.FC<RouteComponentProps> = () => {
         style={{ display: "none" }}
         onChange={() => setBg({ ...bg })}
       />
-      <Flex mt="2em" justify="center">
-        <MapSelect bg={bg} setBg={setBg} />
-      </Flex>
     </>
   )
 }

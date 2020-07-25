@@ -89,7 +89,7 @@ const DraggableToolsSelector: React.FC<DraggableToolsSelectorProps> = ({
   color,
   setColor,
 }) => {
-  const { darkerBgColor, themeColorHex } = useContext(MyThemeContext)
+  const { bgColor, themeColorHex } = useContext(MyThemeContext)
   const { t } = useTranslation()
   const [activeDrags, setActiveDrags] = useState(0)
   useHotkeys("p", () => setTool(Tools.Pencil))
@@ -111,7 +111,7 @@ const DraggableToolsSelector: React.FC<DraggableToolsSelectorProps> = ({
       <Box
         position="fixed"
         zIndex={900}
-        background={darkerBgColor}
+        background={bgColor}
         borderRadius="7px"
         boxShadow="7px 14px 13px 2px rgba(0,0,0,0.24)"
         width="100px"

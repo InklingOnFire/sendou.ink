@@ -24,7 +24,11 @@ const BuildsPageNav: React.FC = () => {
           />
         </Box>
       )}
-      <NavSearch value={filter} setValue={(value) => setFilter(value)} />
+      <NavSearch
+        value={filter}
+        setValue={(value) => setFilter(value)}
+        mb="0.5rem"
+      />
       <NavWeaponSelector linkTo="/builds/" filter={filter} />
     </>
   )

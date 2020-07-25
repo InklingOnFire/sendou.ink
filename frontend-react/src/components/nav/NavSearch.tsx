@@ -19,7 +19,6 @@ const NavSearch: React.FC<NavSearchProps & InputProps> = ({
       setValue={setValue}
       iconRight={FiSearch}
       variant="filled"
-      mb="0.5rem"
       _focus={{}}
       {...props}
     />
