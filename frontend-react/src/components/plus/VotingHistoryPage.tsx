@@ -92,7 +92,6 @@ const VotingHistoryPage: React.FC<RouteComponentProps> = () => {
     setMonthChoices(monthsYears)
   }, [data, loading, error, userQueryLoading, userQueryError, userData])
 
-  if (!loading && data && !data.summaries) return <Redirect to="/404" />
   if (error) return <Error errorMessage={error.message} />
   if (userQueryError) return <Error errorMessage={userQueryError.message} />
   if (
@@ -105,7 +104,6 @@ const VotingHistoryPage: React.FC<RouteComponentProps> = () => {
     !userData.user.plus
   )
     return <Loading />
-  if (userData && !userData.user) return <Redirect to="/access" />
 
   const parts = forms.monthYear!.split(" ")
   const month = months.indexOf(parts[0] as any)
