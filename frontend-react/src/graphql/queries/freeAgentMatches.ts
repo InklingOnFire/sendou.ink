@@ -7,6 +7,7 @@ export interface FreeAgentMatchesData {
       discriminator: string
       twitter_name?: string
       avatar?: string
+      discord_id: string
     }[]
     number_of_likes_received: number
     liked_discord_ids: string[]
@@ -20,6 +21,7 @@ export const FREE_AGENT_MATCHES: DocumentNode = gql`
         username
         discriminator
         avatar
+        discord_id
       }
       number_of_likes_received
       liked_discord_ids

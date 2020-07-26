@@ -23,6 +23,7 @@ interface FreeAgentCardProps {
   post: FreeAgentPost
   canLike: boolean
   likedUsersIds: string[]
+  highlighted?: boolean
 }
 
 const hasExtraInfo = (post: FreeAgentPost) => {
@@ -38,6 +39,7 @@ const FreeAgentCard: React.FC<FreeAgentCardProps> = ({
   post,
   canLike,
   likedUsersIds,
+  highlighted = false,
 }) => {
   const [expanded, setExpanded] = useState(false)
   const { grayWithShade, themeColorWithShade } = useContext(MyThemeContext)
@@ -112,6 +114,7 @@ const FreeAgentCard: React.FC<FreeAgentCardProps> = ({
             letterSpacing="wide"
             fontSize="md"
             mt="0.5em"
+            color={highlighted ? themeColorWithShade : undefined}
           >
             <Flex alignItems="center">
               <Link to={`/u/${discord_user.discord_id}`}>

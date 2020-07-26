@@ -1175,7 +1175,6 @@
     "ZM": "Zambia",
     "ZW": "Zimbabwe"
   },
-
   "navigation": {
     "Map Planner": "Map Planner",
     "Calendar": "Calendar",
@@ -1473,7 +1472,12 @@
     "Past competitive experience": "Past competitive experience",
     "What is your activity like on a typical week?": "What is your activity like on a typical week?",
     "What are you looking from a team?": "What are you looking from a team?",
-    "Free word": "Free word"
+    "Free word": "Free word",
+    "aboutToExpireTitle": "Your free agent post will be hidden",
+    "aboutToExpireContent": "Free agent posts get automatically hidden after one month without activity. Press the button below to reset this timer.",
+    "expiredTitle": "Your free agent post is hidden",
+    "expiredContent": "Press the button if you are still looking for a team to make the post reappear.",
+    "unexpireButton": "Still looking"
   },
   "tournaments": {
     "Tournament": "Tournament",

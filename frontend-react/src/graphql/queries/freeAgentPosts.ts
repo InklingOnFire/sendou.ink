@@ -11,6 +11,7 @@ export const FREE_AGENT_POSTS: DocumentNode = gql`
       past_experience
       description
       createdAt
+      updatedAt
       discord_user {
         username
         discriminator

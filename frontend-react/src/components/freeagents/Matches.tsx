@@ -19,11 +19,17 @@ interface MatchesProps {
     username: string
     discriminator: string
     avatar?: string
+    discord_id: string
   }[]
   likesReceived: number
+  setFocusedPost: React.Dispatch<React.SetStateAction<string | null>>
 }
 
-const Matches: React.FC<MatchesProps> = ({ matches, likesReceived }) => {
+const Matches: React.FC<MatchesProps> = ({
+  matches,
+  likesReceived,
+  setFocusedPost,
+}) => {
   const { t } = useTranslation()
   const { grayWithShade, darkerBgColor } = useContext(MyThemeContext)
 
@@ -50,7 +56,10 @@ const Matches: React.FC<MatchesProps> = ({ matches, likesReceived }) => {
                   >
                     <Popover trigger="hover">
                       <PopoverTrigger>
-                        <Box>
+                        <Box
+                          onClick={() => setFocusedPost(match.discord_id)}
+                          cursor="pointer"
+                        >
                           <UserAvatar
                             src={match.avatar}
                             name={match.username}

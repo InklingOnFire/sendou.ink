@@ -178,6 +178,7 @@ export interface FreeAgentPost {
   past_experience?: string
   description?: string
   createdAt: string
+  updatedAt: string
   discord_user: {
     username: string
     discriminator: string

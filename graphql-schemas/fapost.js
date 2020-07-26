@@ -73,6 +73,7 @@ const typeDef = gql`
     description: String
     discord_user: User!
     createdAt: String!
+    updatedAt: String!
   }
 `
 
@@ -111,11 +112,16 @@ const validateFAPost = (args) => {
 
 const resolvers = {
   Query: {
-    freeAgentPosts: (root, args) => {
+    freeAgentPosts: (root, args, ctx) => {
       const monthAgo = new Date().setMonth(new Date().getMonth() - 1)
       return FAPost.find({
-        updatedAt: { $gte: monthAgo },
-        hidden: { $ne: true },
+        $or: [
+          {
+            updatedAt: { $gte: monthAgo },
+            hidden: { $ne: true },
+          },
+          { discord_id: ctx.user.discord_id, hidden: { $ne: true } },
+        ],
       })
         .populate("discord_user")
         .sort({ createdAt: "desc" })

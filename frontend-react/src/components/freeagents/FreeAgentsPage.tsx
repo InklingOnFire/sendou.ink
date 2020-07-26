@@ -1,5 +1,14 @@
-import { useQuery } from "@apollo/client"
-import { Box, Collapse, Flex } from "@chakra-ui/core"
+import { useQuery, useMutation } from "@apollo/client"
+import {
+  Box,
+  Collapse,
+  Flex,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  useToast,
+} from "@chakra-ui/core"
 import React, { useState } from "react"
 import { Helmet } from "react-helmet-async"
 import { useTranslation } from "react-i18next"
@@ -20,12 +29,13 @@ import { continents } from "../../utils/lists"
 import Error from "../common/Error"
 import Loading from "../common/Loading"
 import WeaponSelector from "../common/WeaponSelector"
-import Alert from "../elements/Alert"
 import Button from "../elements/Button"
 import RadioGroup from "../elements/RadioGroup"
 import FAPostModal from "./FAPostModal"
 import Matches from "./Matches"
 import Posts from "./Posts"
+import { AddFreeAgentPostVars } from "../../graphql/mutations/addFreeAgentPost"
+import { UPDATE_FREE_AGENT_POST } from "../../graphql/mutations/updateFreeAgentPost"
 
 const playstyleToEnum = {
   "Frontline/Slayer": "FRONTLINE",
@@ -33,24 +43,103 @@ const playstyleToEnum = {
   "Backline/Anchor": "BACKLINE",
 } as const
 
+const ExpiringPostAlert: React.FC<{ faPost?: FreeAgentPost }> = ({
+  faPost,
+}) => {
+  const { t } = useTranslation()
+  const toast = useToast()
+  const [editFreeAgentPost, { loading: editLoading }] = useMutation<
+    boolean,
+    AddFreeAgentPostVars
+  >(UPDATE_FREE_AGENT_POST, {
+    variables: { ...(faPost as AddFreeAgentPostVars) },
+    onError: (error) => {
+      toast({
+        title: t("users;An error occurred"),
+        description: error.message,
+        position: "top-right",
+        status: "error",
+        duration: 10000,
+      })
+    },
+    refetchQueries: [{ query: FREE_AGENT_POSTS }],
+  })
+
+  if (!faPost) return null
+
+  const updatedDate = new Date(parseInt(faPost.updatedAt)).getTime()
+  const monthAgo = new Date().setMonth(new Date().getMonth() - 1)
+  const twoWeeksAgo = new Date(Date.now() - 12096e5).getTime()
+
+  if (updatedDate > twoWeeksAgo) return null
+
+  const alreadyHidden = updatedDate < monthAgo
+  return (
+    <Alert
+      status={alreadyHidden ? "warning" : "info"}
+      variant="subtle"
+      flexDirection="column"
+      justifyContent="center"
+      textAlign="center"
+      my="2rem"
+    >
+      <AlertIcon size="40px" mr={0} />
+      <AlertTitle mt={4} mb={1} fontSize="lg">
+        {t(
+          `freeagents;${alreadyHidden ? "expiredTitle" : "aboutToExpireTitle"}`
+        )}
+      </AlertTitle>
+      <AlertDescription maxWidth="sm">
+        {t(
+          `freeagents;${
+            alreadyHidden ? "expiredContent" : "aboutToExpireContent"
+          }`
+        )}
+        <Box mt="1rem">
+          <Button onClick={() => editFreeAgentPost()} loading={editLoading}>
+            {t("freeagents;unexpireButton")}
+          </Button>
+        </Box>
+      </AlertDescription>
+    </Alert>
+  )
+}
+
 interface FreeAgentsPageProps {
   modalOpen: boolean
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  focusedPost: string | null
+  setFocusedPost: React.Dispatch<React.SetStateAction<string | null>>
+  weapon: Weapon | null
+  setWeapon: React.Dispatch<React.SetStateAction<Weapon | null>>
+  playstyle: "Any" | "Frontline/Slayer" | "Midline/Support" | "Backline/Anchor"
+  setPlaystyle: React.Dispatch<
+    React.SetStateAction<
+      "Any" | "Frontline/Slayer" | "Midline/Support" | "Backline/Anchor"
+    >
+  >
+  region: "Any" | "Europe" | "The Americas" | "Oceania" | "Other"
+  setRegion: React.Dispatch<
+    React.SetStateAction<
+      "Any" | "Europe" | "The Americas" | "Oceania" | "Other"
+    >
+  >
 }
 
 const FreeAgentsPage: React.FC<FreeAgentsPageProps> = ({
   modalOpen,
   setModalOpen,
+  focusedPost,
+  setFocusedPost,
+  weapon,
+  setWeapon,
+  playstyle,
+  setPlaystyle,
+  region,
+  setRegion,
 }) => {
   const { t } = useTranslation()
-  const [weapon, setWeapon] = useState<Weapon | null>(null)
   const [showFilters, setShowFilters] = useState(false)
-  const [playstyle, setPlaystyle] = useState<
-    "Any" | "Frontline/Slayer" | "Midline/Support" | "Backline/Anchor"
-  >("Any")
-  const [region, setRegion] = useState<
-    "Any" | "Europe" | "The Americas" | "Oceania" | "Other"
-  >("Any")
   const { data, error, loading } = useQuery<FreeAgentPostsData>(
     FREE_AGENT_POSTS
   )
@@ -198,6 +287,7 @@ const FreeAgentsPage: React.FC<FreeAgentsPageProps> = ({
           />
         </Box>
       </Collapse>
+      <ExpiringPostAlert faPost={ownFAPost} />
       {matchesData && (
         <Box mt="1em">
           <Matches
@@ -205,6 +295,7 @@ const FreeAgentsPage: React.FC<FreeAgentsPageProps> = ({
             likesReceived={
               matchesData.freeAgentMatches.number_of_likes_received
             }
+            setFocusedPost={setFocusedPost}
           />
         </Box>
       )}
@@ -214,6 +305,7 @@ const FreeAgentsPage: React.FC<FreeAgentsPageProps> = ({
         likedUsersIds={
           !matchesData ? [] : matchesData.freeAgentMatches.liked_discord_ids
         }
+        focusedPost={focusedPost}
       />
     </>
   )

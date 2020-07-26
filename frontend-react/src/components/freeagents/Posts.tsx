@@ -1,24 +1,29 @@
 import React, { useState } from "react"
-import { FreeAgentPost } from "../../types"
+import { FreeAgentPost, UserLean, UserData } from "../../types"
 import { Grid, Box, Heading } from "@chakra-ui/core"
 import Alert from "../elements/Alert"
 import FreeAgentCard from "./FreeAgentCard"
 import InfiniteScroll from "react-infinite-scroller"
 import Button from "../elements/Button"
 import { useTranslation } from "react-i18next"
+import { useQuery } from "@apollo/client"
+import { USER } from "../../graphql/queries/user"
 
 interface PostsAccordionProps {
   posts: FreeAgentPost[]
   canLike: boolean
   likedUsersIds: string[]
+  focusedPost: string | null
 }
 
 const Posts: React.FC<PostsAccordionProps> = ({
   posts,
   canLike,
   likedUsersIds,
+  focusedPost,
 }) => {
   const { t } = useTranslation()
+  const { data: userData } = useQuery<UserData>(USER)
   const [agentsToShow, setAgentsToShow] = useState(5)
 
   if (posts.length === 0) {
@@ -28,16 +33,39 @@ const Posts: React.FC<PostsAccordionProps> = ({
       </Alert>
     )
   }
+
+  const postToDisplayFirst = posts.find(
+    (post) =>
+      focusedPost === post.discord_user.discord_id ||
+      (!focusedPost &&
+        userData?.user?.discord_id === post.discord_user.discord_id)
+  )
+
   return (
     <>
-      <Grid gridTemplateColumns="repeat(auto-fit, minmax(260px, 1fr))" mt="1em">
+      {postToDisplayFirst && (
+        <Box mt="1em">
+          <FreeAgentCard
+            post={postToDisplayFirst}
+            canLike={canLike}
+            likedUsersIds={likedUsersIds}
+            highlighted
+          />
+        </Box>
+      )}
+      <Grid gridTemplateColumns="repeat(auto-fit, minmax(260px, 1fr))">
         <InfiniteScroll
           pageStart={1}
           loadMore={(page) => setAgentsToShow(page * 10)}
           hasMore={agentsToShow < posts.length}
         >
           {posts
-            .filter((_, index) => index < agentsToShow)
+            .filter(
+              (post, index) =>
+                index < agentsToShow &&
+                post.discord_user.discord_id !==
+                  postToDisplayFirst?.discord_user.discord_id
+            )
             .map((post) => (
               <Box my="1em" key={post.id}>
                 <FreeAgentCard
