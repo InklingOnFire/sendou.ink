@@ -7,7 +7,6 @@ import calendarIcon from "../../assets/navIcons/calendar.png"
 import freeAgentsIcon from "../../assets/navIcons/freeagents.png"
 import plansIcon from "../../assets/navIcons/plans.png"
 import settingsIcon from "../../assets/navIcons/settings.png"
-import teamsIcon from "../../assets/navIcons/teams.png"
 import tournamentsIcon from "../../assets/navIcons/tournaments.png"
 import userSearchIcon from "../../assets/navIcons/usersearch.png"
 import xsearchIcon from "../../assets/navIcons/xsearch.png"
@@ -45,10 +44,6 @@ const iconNavItems = [
   {
     route: "freeagents",
     icon: freeAgentsIcon,
-  },
-  {
-    route: "t",
-    icon: teamsIcon,
   },
 ] as const
 

@@ -2,20 +2,20 @@ import { useQuery } from "@apollo/client"
 import {
   Badge,
   Box,
+  Flex,
+  Image,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
-  Flex,
-  Image,
 } from "@chakra-ui/core"
 import { Redirect } from "@reach/router"
 import React, { useContext } from "react"
 import { Helmet } from "react-helmet-async"
 import { Trans, useTranslation } from "react-i18next"
-import { FaTrophy, FaTshirt } from "react-icons/fa"
-import { IconType } from "react-icons/lib/cjs"
+import buildsIcon from "../../assets/navIcons/builds.png"
+import xsearchIcon from "../../assets/navIcons/xsearch.png"
 import { PLAYER_INFO } from "../../graphql/queries/playerInfo"
 import { SEARCH_FOR_BUILDS } from "../../graphql/queries/searchForBuilds"
 import {
@@ -35,13 +35,11 @@ import {
 import { canAddJpnBuildsIds, weapons } from "../../utils/lists"
 import Error from "../common/Error"
 import Loading from "../common/Loading"
+import Section from "../common/Section"
 import Markdown from "../elements/Markdown"
 import AvatarWithInfo from "./AvatarWithInfo"
 import BuildTab from "./BuildTab"
 import XRankTab from "./XRankTab"
-import Section from "../common/Section"
-import xsearchIcon from "../../assets/navIcons/xsearch.png"
-import buildsIcon from "../../assets/navIcons/builds.png"
 
 interface Tab {
   id: number
@@ -95,12 +93,7 @@ const UserPage: React.FC<UserPageProps> = ({
     skip: !data || !data.searchForUser || !data.searchForUser.twitter_name,
   })
 
-  const {
-    textColor,
-    themeColor,
-    themeColorWithShade,
-    grayWithShade,
-  } = useContext(MyThemeContext)
+  const { textColor, themeColor, grayWithShade } = useContext(MyThemeContext)
 
   if (loading || userLoading || buildsLoading || playerLoading)
     return <Loading />

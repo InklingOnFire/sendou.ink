@@ -87,6 +87,33 @@ const codes = [
 
 const codeToStage = new Map(codes)
 
+const parseAndSetForms = (
+  name: string,
+  setBg: React.Dispatch<React.SetStateAction<PlannerMapBg>>
+) => {
+  const firstPart = name.split(" ")[0]
+  if (!(firstPart.length === 7 || !firstPart.includes("-"))) return
+
+  const split = firstPart.split("-")
+  if (split.length !== 3) return
+
+  const [view, stage, mode] = split
+
+  if (!["M", "R"].includes(view)) return
+  if (
+    !Array.from(reversedCodes.values())
+      .map((tuple) => tuple[1])
+      .includes(stage as any)
+  )
+    if (!["SZ", "TC", "RM", "CB"].includes(mode)) return
+
+  setBg({
+    view: view as any,
+    stage: codeToStage.get(stage as any)!,
+    mode: mode as any,
+  })
+}
+
 const plannerMapBgToImage = (bg: PlannerMapBg) =>
   `${process.env.PUBLIC_URL}/plannerMaps/${bg.view} ${stageToCode.get(
     bg.stage
@@ -213,38 +240,6 @@ const MapPlannerPage: React.FC<RouteComponentProps & MapPlannerPageProps> = ({
     fileInput.current.click()
   }
 
-  const parseAndSetForms = (name: string) => {
-    console.log("name", name)
-    const firstPart = name.split(" ")[0]
-    if (!(firstPart.length === 7 || !firstPart.includes("-"))) return
-
-    const split = firstPart.split("-")
-    if (split.length !== 3) return
-
-    const [view, stage, mode] = split
-
-    if (!["M", "R"].includes(view)) return
-    console.log(
-      "Array.from(reversedCodes.values()",
-      Array.from(reversedCodes.values())
-    )
-    if (
-      !Array.from(reversedCodes.values())
-        .map((tuple) => tuple[1])
-        .includes(stage as any)
-    )
-      return
-    console.log("2")
-    if (!["SZ", "TC", "RM", "CB"].includes(mode)) return
-    console.log("3")
-
-    setBg({
-      view: view as any,
-      stage: codeToStage.get(stage as any)!,
-      mode: mode as any,
-    })
-  }
-
   const files = fileInput.current?.files
 
   useEffect(() => {
@@ -259,8 +254,8 @@ const MapPlannerPage: React.FC<RouteComponentProps & MapPlannerPageProps> = ({
 
     reader.readAsText(fileObj)
 
-    parseAndSetForms(fileObj.name)
-  }, [files])
+    parseAndSetForms(fileObj.name, setBg)
+  }, [files, setBg])
 
   useEffect(() => {
     if (!sketch) return

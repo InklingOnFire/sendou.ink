@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { FreeAgentPost, UserLean, UserData } from "../../types"
+import { FreeAgentPost, UserData } from "../../types"
 import { Grid, Box, Heading } from "@chakra-ui/core"
 import Alert from "../elements/Alert"
 import FreeAgentCard from "./FreeAgentCard"
