@@ -286,8 +286,6 @@ const resolvers = {
       return { users, suggested, votes }
     },
     suggestions: (root, args, ctx) => {
-      if (!ctx.user || !ctx.user.plus || !ctx.user.plus.membership_status)
-        return null
       const searchCriteria =
         ctx.user.plus.membership_status === "ONE" ? {} : { plus_server: "TWO" }
       return Suggested.find(searchCriteria)
@@ -301,7 +299,6 @@ const resolvers = {
         })
     },
     vouches: (root, args, { user }) => {
-      if (!user || !user.plus || !user.plus.membership_status) return null
       const searchCriteria =
         user.plus.membership_status === "ONE"
           ? { "plus.vouch_status": { $ne: null } }
@@ -311,8 +308,6 @@ const resolvers = {
         .populate("plus.voucher_user")
     },
     summaries: (root, args, ctx) => {
-      if (!ctx.user || !ctx.user.plus || !ctx.user.plus.membership_status)
-        return null
       const searchCriteria =
         ctx.user.plus.membership_status === "ONE" ? {} : { plus_server: "TWO" }
 
