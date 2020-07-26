@@ -100,9 +100,16 @@ const server = new ApolloServer({
   introspection: true,
   playground: true,
   schema,
-  context: ({ req }) => {
-    if (process.env.HIJACKED_USER) {
-      return { user: User.findOne({ discord_id: process.env.HIJACKED_USER }) }
+  context: async ({ req }) => {
+    if (process.env.NODE_ENV === "development") {
+      if (!process.env.HIJACKED_USER) {
+        process.env.HIJACKED_USER = "79237403620945920"
+      }
+      return {
+        user: await User.findOne({
+          discord_id: process.env.HIJACKED_USER,
+        }),
+      }
     }
     return { user: req.user }
   },

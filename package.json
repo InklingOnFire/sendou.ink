@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "cross-env USE_PRODUCTION_DB=TRUE HIJACKED_USER=79237403620945920 concurrently --kill-others \"nodemon index.js\" \"cd frontend-react && npm start\"",
+    "dev:notprod": "cross-env HIJACKED_USER=79237403620945920 concurrently --kill-others \"nodemon index.js\" \"cd frontend-react && npm start\"",
     "build": "cd frontend-react && npm install && npm run build && mv build ../build",
     "testbuild": "rmdir /s /q build && cd frontend-react && npm run build && move build ../build"
   },

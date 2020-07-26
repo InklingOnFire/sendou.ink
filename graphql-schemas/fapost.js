@@ -227,23 +227,22 @@ const resolvers = {
     hideFreeAgentPost: async (root, args, ctx) => {
       if (!ctx.user) throw new AuthenticationError("Not logged in.")
 
-      await FAPost.deleteMany({ discord_id: ctx.user.discord_id }).catch(
-        (e) => {
+      await Promise.all([
+        FAPost.deleteMany({ discord_id: ctx.user.discord_id }).catch((e) => {
           throw (
             (new UserInputError(),
             {
               invalidArgs: args,
             })
           )
-        }
-      )
-
-      await FALike.deleteMany({
-        $or: [
-          { liker_discord_id: ctx.user.discord_id },
-          { liked_discord_id: ctx.user.discord_id },
-        ],
-      })
+        }),
+        FALike.deleteMany({
+          $or: [
+            { liker_discord_id: ctx.user.discord_id },
+            { liked_discord_id: ctx.user.discord_id },
+          ],
+        }),
+      ])
 
       return true
     },
@@ -254,13 +253,14 @@ const resolvers = {
         throw new UserInputError("Can't like your own free agent post")
       }
 
-      const post = await FAPost.findOne({ discord_id: ctx.user.discord_id })
+      const [ownPost, likedPost] = await Promise.all([
+        FAPost.findOne({ discord_id: ctx.user.discord_id }),
+        FAPost.findOne({ discord_id: args.discord_id }),
+      ])
 
-      if (!post) {
+      if (!ownPost) {
         throw new UserInputError("Not a free agent")
       }
-
-      const likedPost = await FAPost.findOne({ discord_id: args.discord_id })
 
       if (!likedPost) {
         throw new UserInputError("Liked user not a free agent")
