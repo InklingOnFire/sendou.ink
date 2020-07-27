@@ -1,32 +1,32 @@
-import React, { useContext, useState, useEffect } from "react"
-import { RouteComponentProps, Link } from "@reach/router"
-import {
-  SEARCH_FOR_DRAFT_CUP,
-  SearchForDraftCupData,
-  SearchForDraftCupVars,
-} from "../../graphql/queries/searchForDraftCup"
 import { useQuery } from "@apollo/client"
-import Loading from "../common/Loading"
-import Error from "../common/Error"
-import { DraftTournamentCard } from "./DraftTournamentCards"
-import Button from "../elements/Button"
-import { FaExternalLinkAlt, FaLongArrowAltLeft } from "react-icons/fa"
-import { Box, Flex, Avatar, Icon, Grid } from "@chakra-ui/core"
-import MyThemeContext from "../../themeContext"
-import {
-  DetailedTeamInfo,
-  Ability,
-  HeadGear,
-  ClothingGear,
-  ShoesGear,
-} from "../../types"
-import { mapIcons } from "../../assets/imageImports"
-import WeaponImage from "../common/WeaponImage"
-import AbilityIcon from "../builds/AbilityIcon"
-import GearImage from "../builds/GearImage"
-import SplatnetIcon from "../common/SplatnetIcon"
+import { Avatar, Box, Flex, Grid, Icon } from "@chakra-ui/core"
+import { Link, RouteComponentProps } from "@reach/router"
+import React, { useContext, useEffect, useState } from "react"
 import { Helmet } from "react-helmet-async"
 import { useTranslation } from "react-i18next"
+import { FaExternalLinkAlt } from "react-icons/fa"
+import { mapIcons } from "../../assets/imageImports"
+import {
+  SearchForDraftCupData,
+  SearchForDraftCupVars,
+  SEARCH_FOR_DRAFT_CUP,
+} from "../../graphql/queries/searchForDraftCup"
+import MyThemeContext from "../../themeContext"
+import {
+  Ability,
+  ClothingGear,
+  DetailedTeamInfo,
+  HeadGear,
+  ShoesGear,
+} from "../../types"
+import AbilityIcon from "../builds/AbilityIcon"
+import GearImage from "../builds/GearImage"
+import Error from "../common/Error"
+import Loading from "../common/Loading"
+import SplatnetIcon from "../common/SplatnetIcon"
+import WeaponImage from "../common/WeaponImage"
+import Button from "../elements/Button"
+import { DraftTournamentCard } from "./DraftTournamentCard"
 
 interface DraftCupDetailsProps {
   id?: string
@@ -83,7 +83,7 @@ const DetailedMapCard: React.FC<DetailedMapCardProps> = ({
   gameNumber,
 }) => {
   const { t } = useTranslation()
-  const { themeColorWithShade, grayWithShade, textColor } = useContext(
+  const { themeColorWithShade, grayWithShade, textColor, bgColor } = useContext(
     MyThemeContext
   )
 
@@ -96,10 +96,11 @@ const DetailedMapCard: React.FC<DetailedMapCardProps> = ({
       overflow="hidden"
       boxShadow="0px 0px 16px 6px rgba(0,0,0,0.1)"
       p="25px"
-      my="1em"
+      mb="1em"
       flexDirection="column"
       justifyContent="space-between"
       alignItems="center"
+      bg={bgColor}
     >
       <Flex
         fontWeight="semibold"
@@ -249,7 +250,7 @@ const CollapsedMapCard: React.FC<CollapsedMapCardProps> = ({
   loading,
 }) => {
   const { t } = useTranslation()
-  const { grayWithShade } = useContext(MyThemeContext)
+  const { grayWithShade, bgColor } = useContext(MyThemeContext)
   const winnerTeamName = mapDetails[0].winners.team_name
   const loserTeamName = mapDetails[0].losers.team_name
   const winnerPlayers = mapDetails[0].winners.players
@@ -278,6 +279,7 @@ const CollapsedMapCard: React.FC<CollapsedMapCardProps> = ({
       flexDirection="column"
       justifyContent="space-between"
       alignItems="center"
+      bg={bgColor}
     >
       {scores.map((scoreObj) => (
         <React.Fragment key={scoreObj.score}>
@@ -337,13 +339,6 @@ const DraftCupDetails: React.FC<RouteComponentProps & DraftCupDetailsProps> = ({
       <Helmet>
         <title>{tournament.name} | sendou.ink</title>
       </Helmet>
-      <Box mb="1em">
-        <Link to="/draft">
-          <Button outlined icon={FaLongArrowAltLeft}>
-            {t("draft;Back to Draft Cup home")}
-          </Button>
-        </Link>
-      </Box>
       <DraftTournamentCard tournament={tournament} />
       <Box mt="1em">
         <a href={tournament.bracket_url}>

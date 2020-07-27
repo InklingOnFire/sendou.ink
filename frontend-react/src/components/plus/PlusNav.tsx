@@ -6,10 +6,17 @@ import {
   FiThumbsUp,
   FiUserCheck,
   FiUserPlus,
+  FiClipboard,
+  FiUsers,
 } from "react-icons/fi"
 import { PlusInfoData, PLUS_INFO } from "../../graphql/queries/plusInfo"
 import SmallHeader from "../common/SmallHeader"
 import NavLink from "../nav/NavLink"
+import {
+  PLUS_DRAFT_CUPS,
+  PlusDraftCupsData,
+} from "../../graphql/queries/plusDraftCups"
+import { months } from "../../utils/lists"
 
 const getFirstFridayDate = () => {
   const today = new Date()
@@ -47,6 +54,7 @@ const PlusNav: React.FC<PlusNavProps> = ({
   openModal,
 }) => {
   const { data: plusInfoData } = useQuery<PlusInfoData>(PLUS_INFO)
+  const { data: draftCupData } = useQuery<PlusDraftCupsData>(PLUS_DRAFT_CUPS)
 
   const suggestVouchLinkText = () => {
     if (!canVouch) return "Suggest"
@@ -59,6 +67,7 @@ const PlusNav: React.FC<PlusNavProps> = ({
 
   return (
     <>
+      <NavLink icon={FiUsers} linkText="Suggests & vouches" linkTo="/plus" />
       <NavLink
         icon={FiUserCheck}
         linkText={suggestVouchLinkText()}
@@ -69,13 +78,7 @@ const PlusNav: React.FC<PlusNavProps> = ({
           !!plusInfoData.plusInfo?.voting_ends
         }
       />
-      <NavLink
-        icon={FiThumbsUp}
-        linkText="Vote on players"
-        linkTo="/plus/voting"
-        disabled={votingIsNotActive}
-      />
-      {votingIsNotActive && (
+      {votingIsNotActive ? (
         <SmallHeader>
           Next voting:{" "}
           {new Date(parseInt(getFirstFridayDate())).toLocaleString("en", {
@@ -83,6 +86,12 @@ const PlusNav: React.FC<PlusNavProps> = ({
             day: "numeric",
           })}
         </SmallHeader>
+      ) : (
+        <NavLink
+          icon={FiThumbsUp}
+          linkText="Vote on players"
+          linkTo="/plus/voting"
+        />
       )}
       <NavLink
         icon={FiUserPlus}
@@ -94,13 +103,33 @@ const PlusNav: React.FC<PlusNavProps> = ({
         linkText="Map voting history"
         linkTo="/plus/maphistory"
       />
-      {isMember && (
-        <NavLink
-          icon={FiMapPin}
-          linkText="Vote on maps"
-          linkTo="/plus/mapvoting"
-        />
-      )}
+      <NavLink
+        icon={FiMapPin}
+        linkText="Vote on maps"
+        linkTo="/plus/mapvoting"
+        disabled={!isMember}
+      />
+      <SmallHeader mt="2rem">Draft Cup</SmallHeader>
+      <NavLink icon={FiClipboard} linkText="Leaderboard" linkTo="/draft" />
+      {draftCupData?.plusDraftCups.tournaments
+        .slice()
+        .sort(
+          (a, b) =>
+            new Date(parseInt(b.date)).getTime() -
+            new Date(parseInt(a.date)).getTime()
+        )
+        .map((tournament) => {
+          const date = new Date(parseInt(tournament.date))
+          const link = `/draft/${
+            tournament.type === "DRAFTTWO" ? "2" : "1"
+          }-${months[date.getMonth() + 1].toLowerCase()}-${date.getFullYear()}`
+
+          const linkText = `${tournament.type === "DRAFTONE" ? "+1" : "+2"} ${
+            months[date.getMonth() + 1]
+          } ${date.getFullYear()}`
+
+          return <NavLink linkText={linkText} linkTo={link} sub />
+        })}
     </>
   )
 }

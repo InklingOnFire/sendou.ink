@@ -9,8 +9,9 @@ interface NavLinkProps {
   linkTo?: string
   onClick?: () => void
   linkText: string
-  icon: IconType
+  icon?: IconType
   disabled?: boolean
+  sub?: boolean
 }
 
 const NavLink: React.FC<NavLinkProps> = ({
@@ -19,6 +20,7 @@ const NavLink: React.FC<NavLinkProps> = ({
   icon,
   onClick,
   disabled = false,
+  sub = false,
 }) => {
   const { grayWithShade } = useContext(MyThemeContext)
 
@@ -30,8 +32,9 @@ const NavLink: React.FC<NavLinkProps> = ({
             icon={icon}
             variant="link"
             color={grayWithShade}
-            ml="0.4rem"
+            ml={sub ? "1rem" : "0.4rem"}
             disabled={disabled}
+            fontSize={sub ? "0.9rem" : "1rem"}
           >
             {linkText}
           </Button>
@@ -46,7 +49,7 @@ const NavLink: React.FC<NavLinkProps> = ({
         icon={icon}
         variant="link"
         color={grayWithShade}
-        ml="0.4rem"
+        ml={sub ? "1rem" : "0.4rem"}
         disabled={disabled}
       >
         {linkText}

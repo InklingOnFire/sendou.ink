@@ -1,19 +1,17 @@
-import React, { useState, useContext } from "react"
 import { useQuery } from "@apollo/client"
-import Loading from "../common/Loading"
-import Error from "../common/Error"
-import { RouteComponentProps } from "@reach/router"
-import { Flex, Heading, Avatar, Box, Icon } from "@chakra-ui/core"
-import PageHeader from "../common/PageHeader"
+import { Avatar, Box, Flex, Heading, Icon } from "@chakra-ui/core"
+import React, { useContext, useState } from "react"
 import { Helmet } from "react-helmet-async"
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
+import { mapIcons } from "../../assets/imageImports"
 import {
-  PLUS_MAPLISTS,
   PlusMaplistsData,
+  PLUS_MAPLISTS,
 } from "../../graphql/queries/plusMaplists"
 import MyThemeContext from "../../themeContext"
 import { Stage } from "../../types"
-import { mapIcons } from "../../assets/imageImports"
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
+import Error from "../common/Error"
+import Loading from "../common/Loading"
 import IconButton from "../elements/IconButton"
 
 interface MaplistCardProps {
@@ -117,7 +115,7 @@ const MaplistCard: React.FC<MaplistCardProps> = ({
   )
 }
 
-const MapVotingHistoryPage: React.FC<RouteComponentProps> = () => {
+const MapVotingHistoryPage: React.FC = () => {
   const { data, error, loading } = useQuery<PlusMaplistsData>(PLUS_MAPLISTS)
   const [index, setIndex] = useState(0)
 
@@ -131,18 +129,19 @@ const MapVotingHistoryPage: React.FC<RouteComponentProps> = () => {
       <Helmet>
         <title>Plus Server Map Voting History | sendou.ink</title>
       </Helmet>
-      <PageHeader title="Map Voting History" />
       <Flex justifyContent="center" alignItems="center">
         <IconButton
           icon={FaArrowLeft}
-          disabled={index === 0}
-          onClick={() => setIndex(index - 1)}
-        />
-        <Heading size="lg">{maplistObject.name}</Heading>
-        <IconButton
-          icon={FaArrowRight}
           disabled={index === data.plusMaplists.length - 1}
           onClick={() => setIndex(index + 1)}
+        />
+        <Heading size="lg" fontFamily="Rubik">
+          {maplistObject.name}
+        </Heading>
+        <IconButton
+          icon={FaArrowRight}
+          disabled={index === 0}
+          onClick={() => setIndex(index - 1)}
         />
       </Flex>
       <Flex flexWrap="wrap" mt="1em" justifyContent="center">

@@ -8,8 +8,29 @@ import { useQuery } from "@apollo/client"
 import { UserData } from "../../types"
 import { USER } from "../../graphql/queries/user"
 import { SUGGESTIONS, SuggestionsData } from "../../graphql/queries/suggestions"
+import VotingHistoryPage from "./VotingHistoryPage"
+import SuggestionVouchModal from "./SuggestionVouchModal"
+import MapVoting from "./MapVoting"
+import MapVotingHistoryPage from "./MapVotingHistoryPage"
+import DraftCupPage from "../plusdraftcup/DraftCupPage"
+import DraftCupDetails from "../plusdraftcup/DraftCupDetails"
 
-const PlusLayout: React.FC<RouteComponentProps> = () => {
+interface PlusLayoutProps {
+  page:
+    | "MAIN"
+    | "VOTING"
+    | "VOTING_HISTORY"
+    | "MAP_VOTING"
+    | "MAP_HISTORY"
+    | "DRAFT_LEADERBOARD"
+    | "DRAFT_TOURNAMENT"
+  tournamentId?: string
+}
+
+const PlusLayout: React.FC<RouteComponentProps & PlusLayoutProps> = ({
+  page,
+  tournamentId,
+}) => {
   const { t } = useTranslation()
   const [suggestionVouchModalOpen, setSuggestionVouchModalOpen] = useState(
     false
@@ -31,6 +52,28 @@ const PlusLayout: React.FC<RouteComponentProps> = () => {
     userData?.user?.plus?.can_vouch && !userData.user.plus.can_vouch_again_after
   )
 
+  const Page = () => {
+    switch (page) {
+      case "MAIN":
+        return <PlusPage />
+      case "VOTING":
+        return null
+      case "VOTING_HISTORY":
+        return <VotingHistoryPage />
+      case "MAP_VOTING":
+        return <MapVoting />
+      case "MAP_HISTORY":
+        return <MapVotingHistoryPage />
+      case "DRAFT_LEADERBOARD":
+        return <DraftCupPage />
+      case "DRAFT_TOURNAMENT":
+        return <DraftCupDetails id={tournamentId} />
+      default:
+        console.error(`Invalid plus page: ${page}`)
+        return null
+    }
+  }
+
   return (
     <Layout
       title={t("navigation;Plus Server")}
@@ -43,13 +86,17 @@ const PlusLayout: React.FC<RouteComponentProps> = () => {
         />
       }
       page={
-        <PlusPage
-          modalOpen={suggestionVouchModalOpen}
-          closeModal={() => setSuggestionVouchModalOpen(false)}
-          canSuggest={!ownSuggestion && isMember}
-          canVouch={canVouch}
-          usersPlusServer={userData?.user?.plus?.membership_status}
-        />
+        <>
+          {suggestionVouchModalOpen && (
+            <SuggestionVouchModal
+              closeModal={() => setSuggestionVouchModalOpen(false)}
+              canSuggest={canSuggest}
+              canVouch={canVouch}
+              plusServer={userData?.user?.plus?.membership_status!}
+            />
+          )}
+          <Page />
+        </>
       }
     />
   )

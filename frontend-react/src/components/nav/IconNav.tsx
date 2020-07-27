@@ -8,7 +8,6 @@ import freeAgentsIcon from "../../assets/navIcons/freeagents.png"
 import plansIcon from "../../assets/navIcons/plans.png"
 import settingsIcon from "../../assets/navIcons/settings.png"
 import tournamentsIcon from "../../assets/navIcons/tournaments.png"
-import userSearchIcon from "../../assets/navIcons/usersearch.png"
 import xsearchIcon from "../../assets/navIcons/xsearch.png"
 import UserItem from "./UserItem"
 
@@ -30,20 +29,17 @@ const iconNavItems = [
     icon: analyzerIcon,
   },
   {
-    route: "xsearch",
-    icon: xsearchIcon,
-  },
-  {
     route: "tournaments",
     icon: tournamentsIcon,
   },
   {
-    route: "u",
-    icon: userSearchIcon,
-  },
-  {
     route: "freeagents",
     icon: freeAgentsIcon,
+  },
+
+  {
+    route: "xsearch",
+    icon: xsearchIcon,
   },
 ] as const
 

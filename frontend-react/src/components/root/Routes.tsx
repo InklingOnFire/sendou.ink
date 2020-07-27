@@ -1,8 +1,8 @@
 import { Router } from "@reach/router"
 import React, { lazy, Suspense } from "react"
+import LoadingLayout from "./LoadingLayout"
 import NotFound from "./NotFound"
 import { ScrollToTop } from "./ScrollToTop"
-import LoadingLayout from "./LoadingLayout"
 
 const HomePage = lazy(() => import("../home/HomePage"))
 const UserLayout = lazy(() => import("../user/UserLayout"))
@@ -22,12 +22,7 @@ const TeamPage = lazy(() => import("../team/TeamPage"))
 const XSearch = lazy(() => import("../xsearch/Top500BrowserPage"))
 const XTrends = lazy(() => import("../xtrends/XTrendsPage"))
 const PlusLayout = lazy(() => import("../plus/PlusLayout"))
-const DraftCupPage = lazy(() => import("../plusdraftcup/DraftCupPage"))
-const DraftCupDetails = lazy(() => import("../plusdraftcup/DraftCupDetails"))
 const Access = lazy(() => import("./Access"))
-const VotingHistoryPage = lazy(() => import("../plus/VotingHistoryPage"))
-const MapVotingHistoryPage = lazy(() => import("../plus/MapVotingHistoryPage"))
-const MapVoting = lazy(() => import("../plus/MapVoting"))
 const About = lazy(() => import("./About"))
 const Links = lazy(() => import("./Links"))
 const TranslatePage = lazy(() => import("../translate/TranslatePage"))
@@ -58,12 +53,12 @@ const Routes: React.FC = () => {
           <About path="/about" />
           <Links path="/links" />
           <Access path="/access" />
-          <PlusLayout path="/plus" />
-          <DraftCupPage path="/draft" />
-          <DraftCupDetails path="/draft/:id" />
-          <VotingHistoryPage path="/plus/history" />
-          <MapVotingHistoryPage path="/plus/maphistory" />
-          <MapVoting path="/plus/mapvoting" />
+          <PlusLayout path="/plus" page="MAIN" />
+          <PlusLayout path="/draft" page="DRAFT_LEADERBOARD" />
+          <PlusLayout path="/draft/:tournamentId" page="DRAFT_TOURNAMENT" />
+          <PlusLayout path="/plus/history" page="VOTING_HISTORY" />
+          <PlusLayout path="/plus/maphistory" page="MAP_HISTORY" />
+          <PlusLayout path="/plus/mapvoting" page="MAP_VOTING" />
           <NotFound default />
         </ScrollToTop>
       </Router>

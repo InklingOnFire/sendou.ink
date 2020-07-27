@@ -1,28 +1,11 @@
+import { Box, Flex, Image } from "@chakra-ui/core"
+import { Link } from "@reach/router"
 import React, { useContext } from "react"
-import { Flex, Grid, Box, Image } from "@chakra-ui/core"
+import { useTranslation } from "react-i18next"
+import { medalEmoji } from "../../assets/imageImports"
 import trophy from "../../assets/trophy.png"
 import MyThemeContext from "../../themeContext"
-import { months } from "../../utils/lists"
-import { Link } from "@reach/router"
-import { medalEmoji } from "../../assets/imageImports"
 import Button from "../elements/Button"
-import { useTranslation } from "react-i18next"
-
-interface DraftTournamentCardsProps {
-  tournaments: {
-    name: string
-    top_3_team_names: string[]
-    top_3_discord_users: {
-      username: string
-      discriminator: string
-      twitter_name?: string
-      discord_id: string
-    }[][]
-    bracket_url: string
-    date: string
-    type: "DRAFTONE" | "DRAFTTWO"
-  }[]
-}
 
 interface DraftTournamentCardProps {
   tournament: {
@@ -57,7 +40,9 @@ export const DraftTournamentCard: React.FC<DraftTournamentCardProps> = ({
   link,
 }) => {
   const { t, i18n } = useTranslation()
-  const { grayWithShade, themeColorHexLighter } = useContext(MyThemeContext)
+  const { grayWithShade, themeColorHexLighter, bgColor } = useContext(
+    MyThemeContext
+  )
 
   const MedalRow: React.FC<MedalRowProps> = ({
     players,
@@ -101,11 +86,11 @@ export const DraftTournamentCard: React.FC<DraftTournamentCardProps> = ({
       boxShadow="0px 0px 16px 6px rgba(0,0,0,0.1)"
       p="25px"
       w="100%"
-      h="100%"
       flexDirection="column"
       justifyContent="space-between"
       alignItems="center"
       transition="all 0.2s"
+      bg={bgColor}
     >
       <Box fontWeight="semibold" as="h4" lineHeight="tight" textAlign="center">
         {tournament.name}
@@ -150,33 +135,4 @@ export const DraftTournamentCard: React.FC<DraftTournamentCardProps> = ({
   )
 }
 
-const DraftTournamentCards: React.FC<DraftTournamentCardsProps> = ({
-  tournaments,
-}) => {
-  return (
-    <>
-      <Grid
-        gridGap="1em"
-        gridTemplateColumns="repeat(auto-fit, minmax(260px, 1fr))"
-        mt="1em"
-      >
-        {tournaments.map((tournament) => {
-          const date = new Date(parseInt(tournament.date))
-          return (
-            <DraftTournamentCard
-              key={tournament.name}
-              tournament={tournament}
-              link={`/draft/${
-                tournament.type === "DRAFTTWO" ? "2" : "1"
-              }-${months[
-                date.getMonth() + 1
-              ].toLowerCase()}-${date.getFullYear()}`}
-            />
-          )
-        })}
-      </Grid>
-    </>
-  )
-}
-
-export default DraftTournamentCards
+export default DraftTournamentCard

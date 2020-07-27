@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from "react"
-import { RouteComponentProps, Link, Redirect } from "@reach/router"
-import { useQuery, useMutation } from "@apollo/client"
-import { MAP_VOTES, MapVotesData } from "../../graphql/queries/mapVotes"
-import Error from "../common/Error"
-import Loading from "../common/Loading"
-import { Helmet } from "react-helmet-async"
-import PageHeader from "../common/PageHeader"
-import MapVoteGrid from "./MapVoteGrid"
+import { useMutation, useQuery } from "@apollo/client"
 import { useToast } from "@chakra-ui/core"
-import Button from "../elements/Button"
-import { FaEnvelope, FaLongArrowAltLeft } from "react-icons/fa"
+import { Redirect } from "@reach/router"
+import React, { useEffect, useState } from "react"
+import { Helmet } from "react-helmet-async"
+import { FaEnvelope } from "react-icons/fa"
 import {
   AddMapVotesVars,
   ADD_MAP_VOTES,
 } from "../../graphql/mutations/addMapVotes"
-import Alert from "../elements/Alert"
+import { MapVotesData, MAP_VOTES } from "../../graphql/queries/mapVotes"
 import { USER } from "../../graphql/queries/user"
+import Error from "../common/Error"
+import Loading from "../common/Loading"
+import Alert from "../elements/Alert"
+import Button from "../elements/Button"
+import MapVoteGrid from "./MapVoteGrid"
 
-const MapVoting: React.FC<RouteComponentProps> = () => {
+const MapVoting = () => {
   const { data, error, loading } = useQuery<MapVotesData>(MAP_VOTES)
   const {
     data: userData,
@@ -89,13 +88,7 @@ const MapVoting: React.FC<RouteComponentProps> = () => {
       <Helmet>
         <title>Plus Server Map Voting | sendou.ink</title>
       </Helmet>
-      <PageHeader title="Map Voting" />
-      <Link to="/plus">
-        <Button outlined icon={FaLongArrowAltLeft}>
-          Back to actions page
-        </Button>
-      </Link>
-      <Alert status="info">
+      <Alert status="info" mt="0px">
         You can update your votes as often as you wish but new map list is only
         generated monthly
       </Alert>
