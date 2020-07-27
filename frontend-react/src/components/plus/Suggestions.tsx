@@ -83,11 +83,12 @@ const Suggestions: React.FC = () => {
     )
   }
 
-  const suggestionMap = (suggestion: Suggestion) => {
+  const suggestionMap = (suggestion: Suggestion, index: number) => {
     const suggested_user = suggestion.discord_user
     const suggester_user = suggestion.suggester_discord_user
     return (
       <React.Fragment key={suggestion.discord_user.discord_id}>
+        {index !== 0 && <Divider my="1rem" />}
         <Flex mr="1em" mt="1rem" alignItems="center">
           <UserAvatar
             src={suggested_user.avatar}
@@ -107,7 +108,6 @@ const Suggestions: React.FC = () => {
           </Box>{" "}
           {suggestion.description}
         </Box>
-        <Divider my="1rem" />
       </React.Fragment>
     )
   }
