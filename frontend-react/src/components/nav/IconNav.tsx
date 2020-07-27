@@ -61,7 +61,7 @@ const IconNav: React.FC = () => {
           <PseudoBox
             w="48px"
             h="48px"
-            my="0.3rem"
+            mt="0.3rem"
             cursor="pointer"
             transition="0.3s transform"
             _hover={{ transform: "scale(1.15)" }}
@@ -73,8 +73,8 @@ const IconNav: React.FC = () => {
       <PseudoBox
         w="48px"
         h="48px"
-        my="0.7rem"
-        pt="0.5rem"
+        my="0.3rem"
+        py="0.6rem"
         cursor="pointer"
         transition="0.3s transform"
         borderTop="1px solid"

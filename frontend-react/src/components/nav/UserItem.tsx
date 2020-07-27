@@ -15,24 +15,26 @@ const UserItem: React.FC = () => {
     return (
       <Link to={`/u/${data.user.custom_url ?? data.user.discord_id}`}>
         <UserAvatar
+          my="1rem"
           src={data.user.avatar}
           name={data.user.username}
-          my="0.5rem"
         />
       </Link>
     )
 
   return (
-    <PseudoBox
-      w="48px"
-      h="48px"
-      my="0.3rem"
-      cursor="pointer"
-      transition="0.3s transform"
-      _hover={{ transform: "scale(1.15)" }}
-    >
-      <Image ignoreFallback src={loginIcon} />
-    </PseudoBox>
+    <a href="/auth/discord">
+      <PseudoBox
+        w="48px"
+        h="48px"
+        cursor="pointer"
+        transition="0.3s transform"
+        pt="1rem"
+        _hover={{ transform: "scale(1.15)" }}
+      >
+        <Image ignoreFallback src={loginIcon} />
+      </PseudoBox>
+    </a>
   )
 }
 
