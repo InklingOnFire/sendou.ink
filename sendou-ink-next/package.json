@@ -1,0 +1,31 @@
+{
+  "name": "with-typescript",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "ts-node": "ts-node database/index.ts"
+  },
+  "dependencies": {
+    "@chakra-ui/core": "^0.8.0",
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
+    "class-validator": "^0.12.2",
+    "emotion-theming": "^10.0.27",
+    "next": "latest",
+    "pg": "^8.3.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.25"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.19",
+    "@types/react": "^16.9.16",
+    "@types/react-dom": "^16.9.4",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6"
+  },
+  "license": "ISC"
+}
