@@ -1,5 +1,5 @@
 import React from "react";
-import { abilityIcons } from "../../frontend-react/src/assets/imageImports";
+import { abilityIcons } from "../../assets/imageImports";
 import { Ability } from "../../frontend-react/src/types";
 
 //https://github.com/loadout-ink/splat2-calc

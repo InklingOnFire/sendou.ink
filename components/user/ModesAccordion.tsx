@@ -11,7 +11,7 @@ import {
 import { TFunctionResult } from "i18next";
 import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { modeIconMap } from "../../frontend-react/src/assets/icons";
+import { modeIconMap } from "../../assets/icons";
 import useBreakPoints from "../../frontend-react/src/hooks/useBreakPoints";
 import MyThemeContext from "../../frontend-react/src/themeContext";
 import { Placement } from "../../frontend-react/src/types";

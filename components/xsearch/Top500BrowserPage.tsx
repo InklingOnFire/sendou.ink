@@ -7,7 +7,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { NumberParam, StringParam, useQueryParams } from "use-query-params";
-import { modeIconMap } from "../../frontend-react/src/assets/icons";
+import { modeIconMap } from "../../assets/icons";
 import {
   SearchForPlacementsData,
   SearchForPlacementsVars,

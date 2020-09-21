@@ -4,7 +4,7 @@ import { Link } from "@reach/router";
 import React, { Suspense, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { FiMoon, FiSun } from "react-icons/fi";
-import { DiscordIcon } from "../../frontend-react/src/assets/icons";
+import { DiscordIcon } from "../../assets/icons";
 import { USER } from "../../frontend-react/src/graphql/queries/user";
 import MyThemeContext from "../../frontend-react/src/themeContext";
 import { UserData } from "../../frontend-react/src/types";

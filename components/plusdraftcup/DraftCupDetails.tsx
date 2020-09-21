@@ -5,8 +5,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { FaExternalLinkAlt, FaLongArrowAltLeft } from "react-icons/fa";
-import { modeIconMap } from "../../frontend-react/src/assets/icons";
-import { mapIcons } from "../../frontend-react/src/assets/imageImports";
+import { modeIconMap } from "../../assets/icons";
+import { mapIcons } from "../../assets/imageImports";
 import {
   SearchForDraftCupData,
   SearchForDraftCupVars,

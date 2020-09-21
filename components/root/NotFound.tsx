@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, Image } from "@chakra-ui/core";
 import { RouteComponentProps } from "@reach/router";
 import React, { useContext } from "react";
-import { Splatoon1Maps } from "../../frontend-react/src/assets/imageImports";
+import { Splatoon1Maps } from "../../assets/imageImports";
 import MyThemeContext from "../../frontend-react/src/themeContext";
 import { choose } from "../../frontend-react/src/utils/helperFunctions";
 

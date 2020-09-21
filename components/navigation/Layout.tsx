@@ -11,13 +11,12 @@ import {
   Image,
   useDisclosure,
 } from "@chakra-ui/core";
-import { Link, useLocation } from "@reach/router";
-import React, { Suspense, useContext, useEffect } from "react";
+import Link from "next/link";
+import { Suspense, useContext } from "react";
 import { FiMenu } from "react-icons/fi";
 import MyThemeContext from "../../frontend-react/src/themeContext";
 import Footer from "./Footer";
 import IconNavBar, { navIcons } from "./IconNavBar";
-import TopNav from "./TopNav";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -31,17 +30,12 @@ const PAGES_WITH_WIDE_CONTAINER = [
 ];
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const { darkerBgColor, bgColor, textColor } = useContext(MyThemeContext);
+  const { darkerBgColor, textColor } = useContext(MyThemeContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const location = useLocation();
-
-  useEffect(() => {
-    document.body.style.backgroundColor = bgColor;
-  }, [bgColor]);
 
   return (
     <>
-      <TopNav />
+      {/*<TopNav />*/}
       <Suspense fallback={null}>
         <IconNavBar />
       </Suspense>
@@ -79,7 +73,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <DrawerCloseButton />
           <DrawerBody>
             {navIcons.map(({ displayName, code }) => (
-              <Link key={displayName} to={code}>
+              <Link key={displayName} href={code}>
                 <Flex alignItems="center" my={4} onClick={onClose}>
                   <Image
                     src={`${process.env.PUBLIC_URL}/navIcons/${code}.png`}

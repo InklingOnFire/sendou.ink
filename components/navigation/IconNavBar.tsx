@@ -7,9 +7,9 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/core";
-import { Link } from "@reach/router";
-import React, { Suspense, useContext } from "react";
-import MyThemeContext from "../../frontend-react/src/themeContext";
+import Link from "next/link";
+import { Suspense, useContext } from "react";
+import MyThemeContext from "utils/themeContext";
 
 const getFirstFridayDate = () => {
   const today = new Date();
@@ -111,7 +111,7 @@ const IconNavBar = () => {
           );
           if (!menuItems.length) {
             return (
-              <Link key={code} to={code}>
+              <Link key={code} href={code}>
                 <MenuNavIcon />
               </Link>
             );
@@ -125,7 +125,7 @@ const IconNavBar = () => {
               <MenuList bg={darkerBgColor}>
                 <MenuGroup title={displayName}>
                   {menuItems.map((item) => (
-                    <Link key={item.code} to={item.code}>
+                    <Link key={item.code} href={item.code}>
                       <MenuItem disabled={item.disabled}>
                         {item.displayName}
                       </MenuItem>

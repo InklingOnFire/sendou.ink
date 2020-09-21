@@ -13,7 +13,7 @@ import { Link } from "@reach/router";
 import React, { useContext, useEffect, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { FiBarChart2, FiEdit, FiInfo, FiTarget } from "react-icons/fi";
-import { top500 } from "../../frontend-react/src/assets/imageImports";
+import { top500 } from "../../assets/imageImports";
 import MyThemeContext from "../../frontend-react/src/themeContext";
 import { Build } from "../../frontend-react/src/types";
 import Flag from "../common/Flag";

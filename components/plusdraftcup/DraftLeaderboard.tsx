@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/core";
 import { Link } from "@reach/router";
 import React, { useContext } from "react";
-import { medalEmoji } from "../../frontend-react/src/assets/imageImports";
+import { medalEmoji } from "../../assets/imageImports";
 import useBreakPoints from "../../frontend-react/src/hooks/useBreakPoints";
 import MyThemeContext from "../../frontend-react/src/themeContext";
 import UserAvatar from "../common/UserAvatar";

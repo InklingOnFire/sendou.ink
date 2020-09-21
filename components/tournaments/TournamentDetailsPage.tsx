@@ -12,8 +12,8 @@ import {
   StringParam,
   useQueryParams,
 } from "use-query-params";
-import { modeIconMap } from "../../frontend-react/src/assets/icons";
-import { mapIcons } from "../../frontend-react/src/assets/imageImports";
+import { modeIconMap } from "../../assets/icons";
+import { mapIcons } from "../../assets/imageImports";
 import {
   SearchForTournamentByIdData,
   SearchForTournamentByIdVars,

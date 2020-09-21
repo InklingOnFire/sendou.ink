@@ -4,7 +4,7 @@ import { Link } from "@reach/router";
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FiClock, FiEdit, FiInfo } from "react-icons/fi";
-import { DiscordIcon } from "../../frontend-react/src/assets/icons";
+import { DiscordIcon } from "../../assets/icons";
 import { CompetitiveFeedEvent } from "../../frontend-react/src/graphql/queries/upcomingEvents";
 import { USER } from "../../frontend-react/src/graphql/queries/user";
 import MyThemeContext from "../../frontend-react/src/themeContext";

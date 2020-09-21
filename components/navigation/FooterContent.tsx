@@ -1,13 +1,13 @@
 import { Box, Flex } from "@chakra-ui/core";
-import { Link } from "@reach/router";
+import Link from "next/link";
 import React, { useContext } from "react";
-import { useTranslation } from "react-i18next";
+//import { useTranslation } from "react-i18next";
 import { FaGithub } from "react-icons/fa";
-import { DiscordIcon } from "../../frontend-react/src/assets/icons";
+import { DiscordIcon } from "../../assets/icons";
 import MyThemeContext from "../../frontend-react/src/themeContext";
 
 const FooterContent: React.FC = () => {
-  const { t } = useTranslation();
+  //const { t } = useTranslation();
   const { darkerBgColor, themeColorWithShade } = useContext(MyThemeContext);
   return (
     <Flex
@@ -24,9 +24,9 @@ const FooterContent: React.FC = () => {
     >
       <Flex flexWrap="wrap" justifyContent="space-between">
         <Box mr="1em">
-          <Link to="/about">{t("footer;About")}</Link>
+          <Link href="/about">{/*t("footer;About")*/}</Link>
         </Box>
-        <Link to="/links">{t("footer;External links")}</Link>
+        <Link href="/links">{/*t("footer;External links")*/}</Link>
       </Flex>
       <Flex alignItems="center" flexWrap="wrap" justifyContent="center">
         <a href="https://discord.gg/sendou">

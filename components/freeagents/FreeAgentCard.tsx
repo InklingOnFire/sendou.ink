@@ -4,7 +4,7 @@ import { Link } from "@reach/router";
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaMinus, FaPlus, FaTwitter } from "react-icons/fa";
-import { top500 } from "../../frontend-react/src/assets/imageImports";
+import { top500 } from "../../assets/imageImports";
 import { ADD_LIKE } from "../../frontend-react/src/graphql/mutations/addLike";
 import { DELETE_LIKE } from "../../frontend-react/src/graphql/mutations/deleteLike";
 import { FREE_AGENT_MATCHES } from "../../frontend-react/src/graphql/queries/freeAgentMatches";

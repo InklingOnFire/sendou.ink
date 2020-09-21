@@ -3,7 +3,7 @@ import { RouteComponentProps } from "@reach/router";
 import React, { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import { posterGirl } from "../../frontend-react/src/assets/imageImports";
+import { posterGirl } from "../../assets/imageImports";
 import MyThemeContext from "../../frontend-react/src/themeContext";
 import "./HomePage.css";
 import Stats from "./Stats";
